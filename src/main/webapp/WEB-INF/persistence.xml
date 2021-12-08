@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+	<persistence-unit name="geogedDS" transaction-type="JTA">
+		<jta-data-source>java:jboss/datasources/geogesDS</jta-data-source>
+		<shared-cache-mode>NONE</shared-cache-mode>		
+		<validation-mode>CALLBACK</validation-mode>
+		<!-- Classes -->
+		<!-- <class>br.com.atlanticasoft.orgenejb.entity.Usuario</class> <exclude-unlisted-classes>true</exclude-unlisted-classes> -->
+		<!-- -->
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="${hbm2ddl_auto}" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.show_sql" value="${show_sql}" />
+			<property name="hibernate.format_sql" value="${show_sql}" />
+			<property name="hibernate.use_sql_comments" value="${show_sql}" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+			<property name="hibernate.generate_statistics" value="${show_sql}"/>
+			<!--  -->
+			<property name="hibernate.integration.envers.enabled" value="false" />						 
+		</properties>
+	</persistence-unit>
+</persistence>
