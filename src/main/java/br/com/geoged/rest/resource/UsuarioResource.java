@@ -39,7 +39,7 @@ public class UsuarioResource
 		return response;
 	}
 
-	@GetMapping(value = "/find_by_tenant_id", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/find_by_tenant_id")
 	public ResponseEntity<List<Usuario>> findByTenantId(@QueryParam(value = "tenantId") Integer tenantId)
 	{
 		ResponseEntity<List<Usuario>> response;

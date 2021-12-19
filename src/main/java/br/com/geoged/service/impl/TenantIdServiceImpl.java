@@ -47,7 +47,7 @@ public class TenantIdServiceImpl extends ServiceBaseImpl<TenantId> implements Te
 	}
 
 	@Override
-	public List<TenantId> findByTenantId(Integer tenantId)
+	public TenantId findByTenantId(Integer tenantId)
 	{
 		return tenantIdRepository.findByTenantId(tenantId);
 	}

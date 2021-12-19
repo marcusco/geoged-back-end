@@ -13,94 +13,109 @@ import javax.validation.constraints.NotEmpty;
 import br.com.geoged.enums.AcaoTipoEnum;
 import br.com.geoged.util.SchemaUtil;
 
+
 @Entity
-@Table(name = "acaotipo", schema = SchemaUtil.DEFAULT,
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"tenant_id", "nome"}),
-        @UniqueConstraint(columnNames = {"tenant_id", "tipo"})})
-public class AcaoTipo implements Serializable {
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE,
-      generator = SchemaUtil.DEFAULT + ".seq_equipe")
-  @Column(name = "id", nullable = false)
-  private Integer id;
-  @Column(name = "tenant_id")
-  private Integer tenantId;
-  @NotEmpty(message = "campo.obrigatorio")
-  @Column(name = "nome", length = 255, nullable = false)
-  private String nome;
-  @Column(name = "tipo", nullable = false)
-  private Integer tipo;
+@Table(name = "acaotipo", schema = SchemaUtil.DEFAULT, uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"tenant_id", "nome"}),
+		@UniqueConstraint(columnNames = {"tenant_id", "tipo"})})
+public class AcaoTipo implements Serializable
+{
+	/**
+	* 
+	*/
+	private static final long	serialVersionUID	= 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipe")
+	@Column(name = "id", nullable = false)
+	private Integer				id;
+	@Column(name = "tenant_id")
+	private Integer				tenantId;
+	@NotEmpty(message = "campo.obrigatorio")
+	@Column(name = "nome", length = 255, nullable = false)
+	private String					nome;
+	@Column(name = "tipo", nullable = false)
+	private Integer				tipo;
+	public AcaoTipo()
+	{
+		super();
+	}
 
+	public Integer getId()
+	{
+		return id;
+	}
 
-  public AcaoTipo() {
-    super();
-  }
+	public void setId(Integer id)
+	{
+		this.id = id;
+	}
 
-  public Integer getId() {
-    return id;
-  }
+	public String getNome()
+	{
+		return nome;
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-  public String getNome() {
-    return nome;
-  }
+	public Integer getTenantId()
+	{
+		return tenantId;
+	}
 
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
+	public void setTenantId(Integer tenantId)
+	{
+		this.tenantId = tenantId;
+	}
 
-  public Integer getTenantId() {
-    return tenantId;
-  }
+	public AcaoTipoEnum getTipo()
+	{
+		if(tipo != null)
+		{
+			return AcaoTipoEnum.getEnum(tipo);
+		}
+		else
+		{
+			return null;
+		}
+	}
 
-  public void setTenantId(Integer tenantId) {
-    this.tenantId = tenantId;
-  }
+	public void setTipo(AcaoTipoEnum tipo)
+	{
+		if(tipo != null)
+		{
+			this.tipo = tipo.getCodigo();
+		}
+		else
+		{
+			this.tipo = null;
+		}
+	}
 
-  public AcaoTipoEnum getTipo() {
-    if (tipo != null) {
-      return AcaoTipoEnum.getEnum(tipo);
-    } else {
-      return null;
-    }
-  }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(id, nome, tenantId, tipo);
+	}
 
-  public void setTipo(AcaoTipoEnum tipo) {
-    if (tipo != null) {
-      this.tipo = tipo.getCodigo();
-    } else {
-      this.tipo = null;
-    }
-  }
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		AcaoTipo other = (AcaoTipo) obj;
+		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo);
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nome, tenantId, tipo);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    AcaoTipo other = (AcaoTipo) obj;
-    return Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-        && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo);
-  }
-
-  @Override
-  public String toString() {
-    return "AcaoTipo [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", tipo=" + tipo
-        + "]";
-  }
+	@Override
+	public String toString()
+	{
+		return "AcaoTipo [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", tipo=" + tipo + "]";
+	}
 }

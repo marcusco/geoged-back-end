@@ -4,7 +4,6 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,7 @@ import br.com.geoged.util.CollectionsUtil;
 
 
 @RestController
-@RequestMapping(value = "/acao_tipo", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/acao_tipo")
 public class AcaoTipoResource
 {
 	@Autowired

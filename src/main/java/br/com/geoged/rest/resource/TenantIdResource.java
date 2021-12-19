@@ -43,9 +43,9 @@ public class TenantIdResource
 	}
 
 	@GetMapping(value = "/find_by_id")
-	public ResponseEntity<List<TenantId>> findById(@QueryParam(value = "id") Integer id)
+	public ResponseEntity<TenantId> findById(@QueryParam(value = "id") Integer id)
 	{
-		List<TenantId> tmp = tenantIdService.findByTenantId(id);
+		var tmp = tenantIdService.findByTenantId(id);
 		if(tmp != null)
 		{
 			return ResponseEntity.ok().body(tmp);
