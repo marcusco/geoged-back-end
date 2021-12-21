@@ -36,7 +36,7 @@ public class UsuarioResourceTest extends GeogedAplicationTests
 	public void testGetAll() throws Exception
 	{
 		when(this.usuarioResource.findByTenantId(2)).thenReturn(getList());
-		given().accept(ContentType.JSON).when().get("usuario/find_by_tenant_id", 1).then().statusCode(HttpStatus.OK.value());
+		given().accept(ContentType.JSON).queryParam("tenantId", 2).when().get("usuario/find_by_tenant_id").then().statusCode(HttpStatus.OK.value());
 	}
 
 	private ResponseEntity<List<Usuario>> getList()
@@ -48,6 +48,6 @@ public class UsuarioResourceTest extends GeogedAplicationTests
 	@Test
 	public void testSave() throws Exception
 	{
-		given();
+		given().accept(ContentType.JSON).body("\n" + "{\n" + "	\"tenantId\": 2,\n" + "	\"nome\": \"MARCUS CESAR2\",\n" + "	\"email\" :\"m@gmail.com\",\n" + "	\"senha\": \"12345\",\n" + "	\"dataregistro\": \"19-12-2021\"\n" + "}").when().post("usuario/salvar").then().statusCode(HttpStatus.CREATED.value());
 	}
 }
