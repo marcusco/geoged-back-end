@@ -7,15 +7,16 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 
 @SpringBootApplication
-public class GeogedApplication extends SpringBootServletInitializer {
+public class GeogedApplication extends SpringBootServletInitializer
+{
+	public static void main(String[] args)
+	{
+		SpringApplication.run(GeogedApplication.class, args);
+	}
 
-  public static void main(String[] args) {
-    SpringApplication.run(GeogedApplication.class, args);
-  }
-
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-    return application.sources(GeogedApplication.class);
-  }
-
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
+	{
+		return application.sources(GeogedApplication.class);
+	}
 }
