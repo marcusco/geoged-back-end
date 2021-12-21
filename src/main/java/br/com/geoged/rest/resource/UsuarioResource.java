@@ -43,6 +43,10 @@ public class UsuarioResource
 	public ResponseEntity<List<Usuario>> findByTenantId(@QueryParam(value = "tenantId") Integer tenantId)
 	{
 		ResponseEntity<List<Usuario>> response;
+		if(tenantId < 0)
+		{
+			return ResponseEntity.badRequest().build();
+		}
 		var tmp = usuarioService.findByTenantId(tenantId);
 		if(tmp != null)
 		{
