@@ -1,14 +1,17 @@
 package br.com.geoged.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.geoged.entity.Voo;
+import br.com.geoged.entity.VooCordenada;
 import br.com.geoged.exceptions.GeoGedException;
 import br.com.geoged.repositoty.VooRepository;
 import br.com.geoged.service.VooCordenadaService;
 import br.com.geoged.service.VooService;
+import br.com.geoged.util.CollectionsUtil;
 
 
 @Service
@@ -63,5 +66,40 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	public List<Voo> findAll(Integer tenantId)
 	{
 		return null;
+	}
+
+	@Override
+	public List<Voo> save(List<Voo> list)
+	{
+		List<Voo> result = new ArrayList<>();
+		//
+		if(!CollectionsUtil.isEmpty(list))
+		{
+			for(Voo voo : list)
+			{
+				var tmp = vooRepository.save(voo);
+				voo.setIdExterno(tmp.getId());
+				result.add(voo);
+				if(!CollectionsUtil.isEmpty(voo.getCordenadas()))
+				{
+					saveCordenada(tmp);
+				}
+			}
+		}
+		return result;
+	}
+
+	private Voo saveCordenada(Voo voo)
+	{
+		List<VooCordenada> result = new ArrayList<>();
+		//
+		for(VooCordenada cordenada : voo.getCordenadas())
+		{
+			cordenada.setVoo(voo);
+			var tmp = vooCordenadaService.save(cordenada);
+			result.add(tmp);
+		}
+		voo.setCordenadas(result);
+		return voo;
 	}
 }

@@ -2,9 +2,7 @@ package br.com.geoged.rest.resource;
 
 import java.util.List;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +16,12 @@ import br.com.geoged.util.CollectionsUtil;
 
 
 @RestController
-@RequestMapping(value = "/voo", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/voo")
 public class VooResource
 {
 	@Autowired
 	private VooService vooService;
+	//
 	@GetMapping(value = "/find_by_tenant_id")
 	public ResponseEntity<List<Voo>> findByTenantId(@QueryParam(value = "tenantId") Integer tenantId)
 	{
@@ -39,18 +38,36 @@ public class VooResource
 		return response;
 	}
 
-	@PostMapping(value = "/salvar")
-	public Response salvar(@RequestBody Voo entity) throws GeoGedException
+	@PostMapping(value = "/save_all")
+	public ResponseEntity<List<Voo>> saveAll(@RequestBody List<Voo> entity) throws GeoGedException
 	{
-		Response response;
+		ResponseEntity<List<Voo>> response;
+		// nver name
 		var tmp = vooService.save(entity);
-		if(tmp != null)
+		if(!CollectionsUtil.isEmpty(tmp))
 		{
-			response = Response.ok(tmp).build();
+			response = ResponseEntity.ok(tmp);
 		}
 		else
 		{
-			response = Response.noContent().build();
+			response = ResponseEntity.noContent().build();
+		}
+		return response;
+	}
+
+	@PostMapping(value = "/save")
+	public ResponseEntity<Voo> save(@RequestBody Voo entity) throws GeoGedException
+	{
+		ResponseEntity<Voo> response;
+		// nver name
+		var tmp = vooService.save(entity);
+		if(tmp != null)
+		{
+			response = ResponseEntity.ok(tmp);
+		}
+		else
+		{
+			response = ResponseEntity.noContent().build();
 		}
 		return response;
 	}

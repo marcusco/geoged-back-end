@@ -12,91 +12,112 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import br.com.geoged.util.SchemaUtil;
 
+
 @Entity
-@Table(name = "equipamentogrupo", schema = SchemaUtil.DEFAULT,
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"tenant_id", "nome"}),
-        @UniqueConstraint(columnNames = {"tenant_id", "idequipamento"})})
-public class EquipamentoGrupo implements Serializable {
+@Table(name = "equipamentogrupo", schema = SchemaUtil.DEFAULT, uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"tenant_id", "nome"}),
+		@UniqueConstraint(columnNames = {"tenant_id", "idequipamento"})})
+public class EquipamentoGrupo implements Serializable
+{
+	/**
+	* 
+	*/
+	private static final long	serialVersionUID	= 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipamentogrupo")
+	@Column(name = "id", nullable = false)
+	private Integer				id;
+	@Column(name = "tenant_id")
+	private Integer				tenantId;
+	@Column(name = "nome", length = 255, nullable = false)
+	private String					nome;
+	@JoinColumn(name = "idequipamento", referencedColumnName = "id")
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	private Equipamento			equipamento;
+	@Transient
+	private Integer				idExterno;
+	//
+	public EquipamentoGrupo()
+	{
+		super();
+	}
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE,
-      generator = SchemaUtil.DEFAULT + ".seq_equipamentogrupo")
-  @Column(name = "id", nullable = false)
-  private Integer id;
-  @Column(name = "tenant_id")
-  private Integer tenantId;
-  @Column(name = "nome", length = 255, nullable = false)
-  private String nome;
-  @JoinColumn(name = "idequipamento", referencedColumnName = "id")
-  @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-  private Equipamento equipamento;
+	public Integer getIdExterno()
+	{
+		return idExterno;
+	}
 
+	public void setIdExterno(Integer idExterno)
+	{
+		this.idExterno = idExterno;
+	}
 
+	public Integer getId()
+	{
+		return id;
+	}
 
-  public EquipamentoGrupo() {
-    super();
-  }
+	public void setId(Integer id)
+	{
+		this.id = id;
+	}
 
-  public Integer getId() {
-    return id;
-  }
+	public String getNome()
+	{
+		return nome;
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-  public String getNome() {
-    return nome;
-  }
+	public Integer getTenantId()
+	{
+		return tenantId;
+	}
 
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
+	public void setTenantId(Integer tenantId)
+	{
+		this.tenantId = tenantId;
+	}
 
-  public Integer getTenantId() {
-    return tenantId;
-  }
+	public Equipamento getEquipamento()
+	{
+		return equipamento;
+	}
 
-  public void setTenantId(Integer tenantId) {
-    this.tenantId = tenantId;
-  }
+	public void setEquipamento(Equipamento equipamento)
+	{
+		this.equipamento = equipamento;
+	}
 
-  public Equipamento getEquipamento() {
-    return equipamento;
-  }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(equipamento, id, nome, tenantId);
+	}
 
-  public void setEquipamento(Equipamento equipamento) {
-    this.equipamento = equipamento;
-  }
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		EquipamentoGrupo other = (EquipamentoGrupo) obj;
+		return Objects.equals(equipamento, other.equipamento) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId);
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(equipamento, id, nome, tenantId);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    EquipamentoGrupo other = (EquipamentoGrupo) obj;
-    return Objects.equals(equipamento, other.equipamento) && Objects.equals(id, other.id)
-        && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId);
-  }
-
-  @Override
-  public String toString() {
-    return "EquipamentoGrupo [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome
-        + ", equipamento=" + equipamento + "]";
-  }
+	@Override
+	public String toString()
+	{
+		return "EquipamentoGrupo [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", equipamento=" + equipamento + "]";
+	}
 }

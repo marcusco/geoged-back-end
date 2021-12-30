@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.geoged.util.SchemaUtil;
 
 
@@ -35,14 +36,28 @@ public class Equipe implements Serializable
 	private Integer						tenantId;
 	@Column(name = "nome", length = 255, nullable = false)
 	private String							nome;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataregistro", nullable = false)
 	private Calendar						dataRegistro;
 	@Transient
+	private Integer						idExterno;
+	@Transient
 	private List<EquipeColaborador>	colaboradores		= null;
+	//
 	public Equipe()
 	{
 		super();
+	}
+
+	public Integer getIdExterno()
+	{
+		return idExterno;
+	}
+
+	public void setIdExterno(Integer idExterno)
+	{
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()

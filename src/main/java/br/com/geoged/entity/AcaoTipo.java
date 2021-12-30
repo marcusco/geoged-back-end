@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import br.com.geoged.enums.AcaoTipoEnum;
@@ -35,9 +36,22 @@ public class AcaoTipo implements Serializable
 	private String					nome;
 	@Column(name = "tipo", nullable = false)
 	private Integer				tipo;
+	@Transient
+	private Integer				idExterno;
+	//
 	public AcaoTipo()
 	{
 		super();
+	}
+
+	public Integer getIdExterno()
+	{
+		return idExterno;
+	}
+
+	public void setIdExterno(Integer idExterno)
+	{
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()

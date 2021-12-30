@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import br.com.geoged.util.SchemaUtil;
 
@@ -33,10 +34,22 @@ public class Usuario implements Serializable
 	private String					email;
 	@Column(name = "senha", length = 255, nullable = false)
 	private String					senha;
+	@Transient
+	private Integer				idExterno;
 	//
 	public Usuario()
 	{
 		super();
+	}
+
+	public Integer getIdExterno()
+	{
+		return idExterno;
+	}
+
+	public void setIdExterno(Integer idExterno)
+	{
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()

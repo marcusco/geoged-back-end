@@ -8,112 +8,142 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import br.com.geoged.enums.EquipamentoTipoEnum;
 import br.com.geoged.util.SchemaUtil;
 
+
 @Entity
-@Table(name = "equipamento", schema = SchemaUtil.DEFAULT,
-    uniqueConstraints = @UniqueConstraint(columnNames = {"tenant_id", "serie"}))
-public class Equipamento implements Serializable {
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE,
-      generator = SchemaUtil.DEFAULT + ".seq_equipe")
-  @Column(name = "id", nullable = false)
-  private Integer id;
-  @Column(name = "tenant_id")
-  private Integer tenantId;
-  @Column(name = "nome", length = 255)
-  private String nome;
-  @Column(name = "descricao", length = 255, nullable = false)
-  private String descricao;
-  @Column(name = "serie", length = 255, nullable = false)
-  private String serie;
-  @Column(name = "tipo", nullable = false)
-  private Integer tipo;
+@Table(name = "equipamento", schema = SchemaUtil.DEFAULT, uniqueConstraints = @UniqueConstraint(columnNames = {
+		"tenant_id", "serie"}))
+public class Equipamento implements Serializable
+{
+	/**
+	* 
+	*/
+	private static final long	serialVersionUID	= 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipamento")
+	@Column(name = "id", nullable = false)
+	private Integer				id;
+	@Column(name = "tenant_id")
+	private Integer				tenantId;
+	@Column(name = "nome", length = 255)
+	private String					nome;
+	@Column(name = "descricao", length = 255, nullable = false)
+	private String					descricao;
+	@Column(name = "serie", length = 255, nullable = false)
+	private String					serie;
+	@Column(name = "tipo", nullable = false)
+	private Integer				tipo;
+	@Transient
+	private Integer				idExterno;
+	//
+	public Equipamento()
+	{
+		super();
+	}
 
-  public Equipamento() {
-    super();
-  }
+	public Integer getIdExterno()
+	{
+		return idExterno;
+	}
 
-  public Integer getId() {
-    return id;
-  }
+	public void setIdExterno(Integer idExterno)
+	{
+		this.idExterno = idExterno;
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	public Integer getId()
+	{
+		return id;
+	}
 
-  public String getNome() {
-    return nome;
-  }
+	public void setId(Integer id)
+	{
+		this.id = id;
+	}
 
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
+	public String getNome()
+	{
+		return nome;
+	}
 
-  public Integer getTenantId() {
-    return tenantId;
-  }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-  public void setTenantId(Integer tenantId) {
-    this.tenantId = tenantId;
-  }
+	public Integer getTenantId()
+	{
+		return tenantId;
+	}
 
-  public String getDescricao() {
-    return descricao;
-  }
+	public void setTenantId(Integer tenantId)
+	{
+		this.tenantId = tenantId;
+	}
 
-  public void setDescricao(String descricao) {
-    this.descricao = descricao;
-  }
+	public String getDescricao()
+	{
+		return descricao;
+	}
 
-  public String getSerie() {
-    return serie;
-  }
+	public void setDescricao(String descricao)
+	{
+		this.descricao = descricao;
+	}
 
-  public void setSerie(String serie) {
-    this.serie = serie;
-  }
+	public String getSerie()
+	{
+		return serie;
+	}
 
-  public EquipamentoTipoEnum getTipo() {
-    return tipo != null ? EquipamentoTipoEnum.getEnum(tipo) : null;
-  }
+	public void setSerie(String serie)
+	{
+		this.serie = serie;
+	}
 
-  public void setTipo(EquipamentoTipoEnum tipo) {
-    if (tipo != null) {
-      this.tipo = tipo.getCodigo();
-    } else {
-      this.tipo = null;
-    }
-  }
+	public EquipamentoTipoEnum getTipo()
+	{
+		return tipo != null ? EquipamentoTipoEnum.getEnum(tipo) : null;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(descricao, id, nome, serie, tenantId, tipo);
-  }
+	public void setTipo(EquipamentoTipoEnum tipo)
+	{
+		if(tipo != null)
+		{
+			this.tipo = tipo.getCodigo();
+		}
+		else
+		{
+			this.tipo = null;
+		}
+	}
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    Equipamento other = (Equipamento) obj;
-    return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
-        && Objects.equals(nome, other.nome) && Objects.equals(serie, other.serie)
-        && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo);
-  }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(descricao, id, nome, serie, tenantId, tipo);
+	}
 
-  @Override
-  public String toString() {
-    return "Equipamento [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", descricao="
-        + descricao + ", serie=" + serie + ", tipo=" + tipo + "]";
-  }
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		Equipamento other = (Equipamento) obj;
+		return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(serie, other.serie) && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Equipamento [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", descricao=" + descricao + ", serie=" + serie + ", tipo=" + tipo + "]";
+	}
 }
