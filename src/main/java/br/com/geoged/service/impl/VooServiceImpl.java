@@ -1,6 +1,7 @@
 package br.com.geoged.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	@Override
 	public List<Voo> findByTenantId(Integer tenantId)
 	{
-		return vooRepository.findByTenantId(tenantId).orElseThrow(() -> new GeoGedException("sem.dados"));
+		return vooRepository.findBytenant_id(tenantId).orElseThrow(() -> new GeoGedException("sem.dados"));
 	}
 
 	@Override
@@ -77,16 +78,32 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		{
 			for(Voo voo : list)
 			{
-				var tmp = vooRepository.save(voo);
-				voo.setIdExterno(tmp.getId());
-				result.add(voo);
-				if(!CollectionsUtil.isEmpty(voo.getCordenadas()))
+				try
 				{
-					saveCordenada(tmp);
+					Voo tmp = findByTenantIAndDescricaoAndNomeAndDataRegistro(voo.getTenant_id(), voo.getDescricao(), voo.getNome(), voo.getDataRegistro());
+					if(tmp == null)
+					{
+						tmp = vooRepository.save(voo);
+					}
+					voo.setId(tmp.getId());
+					voo.setIdExterno(tmp.getId());
+					result.add(voo);
+					if(!CollectionsUtil.isEmpty(voo.getCordenadas()))
+					{
+						saveCordenada(voo);
+					}
+				}
+				catch (Exception e)
+				{
 				}
 			}
 		}
 		return result;
+	}
+
+	public Voo findByTenantIAndDescricaoAndNomeAndDataRegistro(Integer tenantId, String descricao, String nome, Calendar dataRegistro)
+	{
+		return vooRepository.findByTenantIAndDescricaoAndNomeAndDataRegistro(tenantId, descricao, nome, dataRegistro);
 	}
 
 	private Voo saveCordenada(Voo voo)
@@ -97,6 +114,7 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		{
 			cordenada.setVoo(voo);
 			var tmp = vooCordenadaService.save(cordenada);
+			tmp.setIdExterno(tmp.getId());
 			result.add(tmp);
 		}
 		voo.setCordenadas(result);

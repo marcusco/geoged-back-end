@@ -32,7 +32,7 @@ public class VooCordenadaAcao implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer					id;
 	@Column(name = "tenant_id")
-	private Integer					tenantId;
+	private Integer					tenant_id;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataregistro", nullable = false)
 	private Calendar					dataRegistro;
@@ -70,14 +70,14 @@ public class VooCordenadaAcao implements Serializable
 		this.id = id;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public AcaoTipo getAcaoTipo()
@@ -113,7 +113,7 @@ public class VooCordenadaAcao implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(acaoCoordenada, acaoTipo, dataRegistro, id, tenantId);
+		return Objects.hash(acaoCoordenada, acaoTipo, dataRegistro, id, tenant_id);
 	}
 
 	@Override
@@ -126,12 +126,12 @@ public class VooCordenadaAcao implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		VooCordenadaAcao other = (VooCordenadaAcao) obj;
-		return Objects.equals(acaoCoordenada, other.acaoCoordenada) && Objects.equals(acaoTipo, other.acaoTipo) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(tenantId, other.tenantId);
+		return Objects.equals(acaoCoordenada, other.acaoCoordenada) && Objects.equals(acaoTipo, other.acaoTipo) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(tenant_id, other.tenant_id);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "VooCoordenadaAcao [id=" + id + ", tenantId=" + tenantId + ", dataRegistro=" + dataRegistro + ", acaoTipo=" + acaoTipo + ", acaoCoordenada=" + acaoCoordenada + "]";
+		return "VooCoordenadaAcao [id=" + id + ", tenant_id=" + tenant_id + ", dataRegistro=" + dataRegistro + ", acaoTipo=" + acaoTipo + ", acaoCoordenada=" + acaoCoordenada + "]";
 	}
 }

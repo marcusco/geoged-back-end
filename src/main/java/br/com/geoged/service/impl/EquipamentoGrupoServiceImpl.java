@@ -10,41 +10,42 @@ import br.com.geoged.service.EquipamentoGrupoService;
 
 
 @Service
-public class EquipamentoGrupoServiceImpl extends ServiceBaseImpl<EquipamentoGrupo>
-    implements EquipamentoGrupoService {
+public class EquipamentoGrupoServiceImpl extends ServiceBaseImpl<EquipamentoGrupo> implements EquipamentoGrupoService
+{
+	@Autowired
+	private EquipamentoGrupoRepository equipamentoGrupoRepository;
+	@Override
+	public EquipamentoGrupo save(EquipamentoGrupo entity)
+	{
+		return equipamentoGrupoRepository.save(entity);
+	}
 
-  @Autowired
-  private EquipamentoGrupoRepository equipamentoGrupoRepository;
+	public Optional<EquipamentoGrupo> findById(Integer id)
+	{
+		return equipamentoGrupoRepository.findById(id);
+	}
 
-  @Override
-  public EquipamentoGrupo save(EquipamentoGrupo entity) {
-    return equipamentoGrupoRepository.save(entity);
-  }
+	@Override
+	public void delete(EquipamentoGrupo entity)
+	{
+		equipamentoGrupoRepository.delete(entity);
+	}
 
-  public Optional<EquipamentoGrupo> findById(Integer id) {
-    return equipamentoGrupoRepository.findById(id);
-  }
+	@Override
+	public List<EquipamentoGrupo> findByTenantId(Integer tenantId)
+	{
+		return equipamentoGrupoRepository.findTenant_id(tenantId);
+	}
 
-  @Override
-  public void delete(EquipamentoGrupo entity) {
-    equipamentoGrupoRepository.delete(entity);
-  }
+	@Override
+	public EquipamentoGrupo findByNome(Integer tenantId, String nome)
+	{
+		return equipamentoGrupoRepository.findByNome(tenantId, nome);
+	}
 
-  @Override
-  public List<EquipamentoGrupo> findByTenantId(Integer tenantId) {
-    return equipamentoGrupoRepository.findTenantId(tenantId);
-  }
-
-  @Override
-  public EquipamentoGrupo findByNome(Integer tenantId, String nome) {
-    return equipamentoGrupoRepository.findByNome(tenantId, nome);
-  }
-
-  @Override
-  public List<EquipamentoGrupo> findAll(Integer tenantId) {
-    return null;
-  }
-
-
-
+	@Override
+	public List<EquipamentoGrupo> findAll(Integer tenantId)
+	{
+		return null;
+	}
 }

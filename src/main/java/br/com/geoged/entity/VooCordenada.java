@@ -34,7 +34,7 @@ public class VooCordenada implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer						id;
 	@Column(name = "tenant_id", nullable = false)
-	private Integer						tenantId;
+	private Integer						tenant_id;
 	@Column(name = "latitude", nullable = false, columnDefinition = "double precision")
 	private Double							latitude;
 	@Column(name = "longitude", nullable = false, columnDefinition = "double precision")
@@ -47,9 +47,6 @@ public class VooCordenada implements Serializable
 	@JoinColumn(name = "idvoo", referencedColumnName = "id")
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	private Voo								voo;
-	@JoinColumn(name = "idvoocordenadaacao", referencedColumnName = "id")
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-	private VooCordenadaAcao			vooCoordenadaAcao;
 	@Transient
 	private Integer						idExterno;
 	@Transient
@@ -79,14 +76,14 @@ public class VooCordenada implements Serializable
 		this.id = id;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public Double getLatitude()
@@ -139,16 +136,6 @@ public class VooCordenada implements Serializable
 		this.voo = voo;
 	}
 
-	public VooCordenadaAcao getVooCoordenadaAcao()
-	{
-		return vooCoordenadaAcao;
-	}
-
-	public void setVooCoordenadaAcao(VooCordenadaAcao vooCoordenadaAcao)
-	{
-		this.vooCoordenadaAcao = vooCoordenadaAcao;
-	}
-
 	public List<VooCordenadaAcao> getAcoes()
 	{
 		if(acoes == null)
@@ -166,7 +153,7 @@ public class VooCordenada implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(altitude, dataRegistro, id, latitude, longitude, tenantId, voo, vooCoordenadaAcao);
+		return Objects.hash(altitude, dataRegistro, id, latitude, longitude, tenant_id, voo);
 	}
 
 	@Override
@@ -179,12 +166,12 @@ public class VooCordenada implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		VooCordenada other = (VooCordenada) obj;
-		return Objects.equals(altitude, other.altitude) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(latitude, other.latitude) && Objects.equals(longitude, other.longitude) && Objects.equals(tenantId, other.tenantId) && Objects.equals(voo, other.voo) && Objects.equals(vooCoordenadaAcao, other.vooCoordenadaAcao);
+		return Objects.equals(altitude, other.altitude) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(latitude, other.latitude) && Objects.equals(longitude, other.longitude) && Objects.equals(tenant_id, other.tenant_id) && Objects.equals(voo, other.voo);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "VooCoordenada [id=" + id + ", tenantId=" + tenantId + ", latitude=" + latitude + ", longitude=" + longitude + ", altitude=" + altitude + ", dataRegistro=" + dataRegistro + ", voo=" + voo + ", vooCoordenadaAcao=" + vooCoordenadaAcao + "]";
+		return "VooCoordenada [id=" + id + ", tenant_id=" + tenant_id + ", latitude=" + latitude + ", longitude=" + longitude + ", altitude=" + altitude + ", dataRegistro=" + dataRegistro + ", voo=" + voo.toString();
 	}
 }

@@ -10,38 +10,42 @@ import br.com.geoged.service.ColaboradorService;
 
 
 @Service
-public class ColaboradorServiceImpl extends ServiceBaseImpl<Colaborador>
-    implements ColaboradorService {
+public class ColaboradorServiceImpl extends ServiceBaseImpl<Colaborador> implements ColaboradorService
+{
+	@Autowired
+	private ColaboradorRepository colaboradorRepository;
+	@Override
+	public Colaborador save(Colaborador entity)
+	{
+		return colaboradorRepository.save(entity);
+	}
 
-  @Autowired
-  private ColaboradorRepository colaboradorRepository;
+	public Optional<Colaborador> findById(Integer id)
+	{
+		return colaboradorRepository.findById(id);
+	}
 
-  @Override
-  public Colaborador save(Colaborador entity) {
-    return colaboradorRepository.save(entity);
-  }
+	@Override
+	public void delete(Colaborador entity)
+	{
+		colaboradorRepository.delete(entity);
+	}
 
-  public Optional<Colaborador> findById(Integer id) {
-    return colaboradorRepository.findById(id);
-  }
+	@Override
+	public Colaborador findByNome(Integer tenantId, String nome)
+	{
+		return colaboradorRepository.findByNome(tenantId, nome);
+	}
 
-  @Override
-  public void delete(Colaborador entity) {
-    colaboradorRepository.delete(entity);
-  }
+	@Override
+	public List<Colaborador> findByTenantId(Integer tenantId)
+	{
+		return colaboradorRepository.findByTenant_id(tenantId);
+	}
 
-  @Override
-  public Colaborador findByNome(Integer tenantId, String nome) {
-    return colaboradorRepository.findByNome(tenantId, nome);
-  }
-
-  @Override
-  public List<Colaborador> findByTenantId(Integer tenantId) {
-    return colaboradorRepository.findByTenantId(tenantId);
-  }
-
-  @Override
-  public List<Colaborador> findAll(Integer tenantId) {
-    return null;
-  }
+	@Override
+	public List<Colaborador> findAll(Integer tenantId)
+	{
+		return null;
+	}
 }

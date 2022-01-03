@@ -37,7 +37,7 @@ public class Voo implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@Column(name = "nome", length = 255, nullable = false)
 	private String					nome;
 	@Column(name = "descricao", length = 255)
@@ -67,7 +67,7 @@ public class Voo implements Serializable
 
 	public Integer getIdExterno()
 	{
-		return idExterno;
+		return id;
 	}
 
 	public void setIdExterno(Integer idExterno)
@@ -95,14 +95,14 @@ public class Voo implements Serializable
 		this.nome = nome;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public String getDescricao()
@@ -168,7 +168,7 @@ public class Voo implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(dataRegistro, descricao, equipamento, equipe, id, nome, tenantId, usuario);
+		return Objects.hash(dataRegistro, descricao, equipamento, equipe, id, nome, tenant_id, usuario);
 	}
 
 	@Override
@@ -181,12 +181,12 @@ public class Voo implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		Voo other = (Voo) obj;
-		return Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(descricao, other.descricao) && Objects.equals(equipamento, other.equipamento) && Objects.equals(equipe, other.equipe) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId) && Objects.equals(usuario, other.usuario);
+		return Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(descricao, other.descricao) && Objects.equals(equipamento, other.equipamento) && Objects.equals(equipe, other.equipe) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenant_id, other.tenant_id) && Objects.equals(usuario, other.usuario);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Voo [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", descricao=" + descricao + ", dataRegistro=" + dataRegistro + ", usuario=" + usuario + ", equipe=" + equipe + ", equipamento=" + equipamento + "]";
+		return "Voo [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", descricao=" + descricao + ", dataRegistro=" + dataRegistro + ", usuario=" + usuario + ", equipe=" + equipe + ", equipamento=" + equipamento + "]";
 	}
 }

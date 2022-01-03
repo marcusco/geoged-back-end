@@ -27,7 +27,7 @@ public class Usuario implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id", nullable = false)
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@Column(name = "nome", length = 255, nullable = false)
 	private String					nome;
 	@Column(name = "email", length = 255, nullable = false)
@@ -44,12 +44,12 @@ public class Usuario implements Serializable
 
 	public Integer getIdExterno()
 	{
-		return idExterno;
+		return id;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.idExterno = idExterno;
+		this.id = idExterno;
 	}
 
 	public Integer getId()
@@ -72,14 +72,14 @@ public class Usuario implements Serializable
 		this.nome = nome;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public String getEmail()
@@ -105,7 +105,7 @@ public class Usuario implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(email, id, nome, senha, tenantId);
+		return Objects.hash(email, id, nome, senha, tenant_id);
 	}
 
 	@Override
@@ -118,12 +118,12 @@ public class Usuario implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha) && Objects.equals(tenantId, other.tenantId);
+		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha) && Objects.equals(tenant_id, other.tenant_id);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Usuario [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
+		return "Usuario [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
 	}
 }

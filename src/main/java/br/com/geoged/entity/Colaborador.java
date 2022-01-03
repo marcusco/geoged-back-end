@@ -27,7 +27,7 @@ public class Colaborador implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@Column(name = "nome", length = 255)
 	private String					nome;
 	@Column(name = "cpfcnpj", length = 255)
@@ -41,12 +41,12 @@ public class Colaborador implements Serializable
 
 	public Integer getIdExterno()
 	{
-		return idExterno;
+		return id;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.idExterno = idExterno;
+		this.id = idExterno;
 	}
 
 	public Integer getId()
@@ -69,14 +69,14 @@ public class Colaborador implements Serializable
 		this.nome = nome;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public String getCpfCnpj()
@@ -92,7 +92,7 @@ public class Colaborador implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(cpfCnpj, id, nome, tenantId);
+		return Objects.hash(cpfCnpj, id, nome, tenant_id);
 	}
 
 	@Override
@@ -105,12 +105,12 @@ public class Colaborador implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		Colaborador other = (Colaborador) obj;
-		return Objects.equals(cpfCnpj, other.cpfCnpj) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId);
+		return Objects.equals(cpfCnpj, other.cpfCnpj) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenant_id, other.tenant_id);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Colaborador [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", cpfCnpj=" + cpfCnpj + "]";
+		return "Colaborador [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", cpfCnpj=" + cpfCnpj + "]";
 	}
 }

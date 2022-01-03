@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import br.com.geoged.entity.Equipamento;
 
-public interface EquipamentoRepository extends JpaRepository<Equipamento, Integer> {
 
-  @Query("select e from Equipamento e where e.tenantId = :tenantId and e.nome = :nome")
-  public Equipamento findByNome(@Param("tenantId") Integer tenantId, @Param("nome") String nome);
+public interface EquipamentoRepository extends JpaRepository<Equipamento, Integer>
+{
+	@Query("select e from Equipamento e where e.tenant_id = :tenant_id and e.nome = :nome")
+	public Equipamento findByNome(@Param("tenant_id") Integer tenant_id, @Param("nome") String nome);
 
-  @Query("select e from Equipamento e where e.tenantId = :tenantId")
-  public List<Equipamento> findTenantId(@Param("tenantId") Integer tenantId);
-
+	@Query("select e from Equipamento e where e.tenant_id = :tenant_id")
+	public List<Equipamento> findTenant_id(@Param("tenant_id") Integer tenant_id);
 }

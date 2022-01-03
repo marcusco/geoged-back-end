@@ -12,6 +12,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>
 	@Query("select u from Usuario u where u.email = :email")
 	public List<Usuario> findByEmail(@Param("email") String email);
 
-	@Query("select u from Usuario u where u.tenantId = :tenantId")
-	public List<Usuario> findByTenantId(@Param("tenantId") Integer tenantId);
+	@Query("select u from Usuario u where u.tenant_id = :tenant_id")
+	public List<Usuario> findByTenant_id(@Param("tenant_id") Integer tenant_id);
 }

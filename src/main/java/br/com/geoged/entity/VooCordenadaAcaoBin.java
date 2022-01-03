@@ -29,7 +29,7 @@ public class VooCordenadaAcaoBin implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@Column(name = "tipo", nullable = false, length = 1)
 	private String					tipo;
 	@Column(name = "nomearquivo", nullable = true, length = 255)
@@ -72,14 +72,14 @@ public class VooCordenadaAcaoBin implements Serializable
 		this.id = id;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public String getTipo()
@@ -158,7 +158,7 @@ public class VooCordenadaAcaoBin implements Serializable
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(valorBlob);
-		result = prime * result + Objects.hash(dataRegistro, extensao, id, mimeType, nomeArquivo, tenantId, tipo, valorClob);
+		result = prime * result + Objects.hash(dataRegistro, extensao, id, mimeType, nomeArquivo, tenant_id, tipo, valorClob);
 		return result;
 	}
 
@@ -172,12 +172,12 @@ public class VooCordenadaAcaoBin implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		VooCordenadaAcaoBin other = (VooCordenadaAcaoBin) obj;
-		return Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(extensao, other.extensao) && Objects.equals(id, other.id) && Objects.equals(mimeType, other.mimeType) && Objects.equals(nomeArquivo, other.nomeArquivo) && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo) && Arrays.equals(valorBlob, other.valorBlob) && Objects.equals(valorClob, other.valorClob);
+		return Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(extensao, other.extensao) && Objects.equals(id, other.id) && Objects.equals(mimeType, other.mimeType) && Objects.equals(nomeArquivo, other.nomeArquivo) && Objects.equals(tenant_id, other.tenant_id) && Objects.equals(tipo, other.tipo) && Arrays.equals(valorBlob, other.valorBlob) && Objects.equals(valorClob, other.valorClob);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "VooCoordenadaAcaoBin [id=" + id + ", tenantId=" + tenantId + ", tipo=" + tipo + ", nomeArquivo=" + nomeArquivo + ", extensao=" + extensao + ", mimeType=" + mimeType + ", valorClob=" + valorClob + ", valorBlob=" + Arrays.toString(valorBlob) + ", dataRegistro=" + dataRegistro + "]";
+		return "VooCoordenadaAcaoBin [id=" + id + ", tenant_id=" + tenant_id + ", tipo=" + tipo + ", nomeArquivo=" + nomeArquivo + ", extensao=" + extensao + ", mimeType=" + mimeType + ", valorClob=" + valorClob + ", valorBlob=" + Arrays.toString(valorBlob) + ", dataRegistro=" + dataRegistro + "]";
 	}
 }

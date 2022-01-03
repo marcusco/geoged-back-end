@@ -28,7 +28,7 @@ public class Equipamento implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@Column(name = "nome", length = 255)
 	private String					nome;
 	@Column(name = "descricao", length = 255, nullable = false)
@@ -47,12 +47,12 @@ public class Equipamento implements Serializable
 
 	public Integer getIdExterno()
 	{
-		return idExterno;
+		return id;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.idExterno = idExterno;
+		this.id = idExterno;
 	}
 
 	public Integer getId()
@@ -75,14 +75,14 @@ public class Equipamento implements Serializable
 		this.nome = nome;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public String getDescricao()
@@ -125,7 +125,7 @@ public class Equipamento implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(descricao, id, nome, serie, tenantId, tipo);
+		return Objects.hash(descricao, id, nome, serie, tenant_id, tipo);
 	}
 
 	@Override
@@ -138,12 +138,12 @@ public class Equipamento implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		Equipamento other = (Equipamento) obj;
-		return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(serie, other.serie) && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo);
+		return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(serie, other.serie) && Objects.equals(tenant_id, other.tenant_id) && Objects.equals(tipo, other.tipo);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Equipamento [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", descricao=" + descricao + ", serie=" + serie + ", tipo=" + tipo + "]";
+		return "Equipamento [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", descricao=" + descricao + ", serie=" + serie + ", tipo=" + tipo + "]";
 	}
 }

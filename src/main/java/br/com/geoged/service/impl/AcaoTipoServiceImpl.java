@@ -41,7 +41,7 @@ public class AcaoTipoServiceImpl extends ServiceBaseImpl<AcaoTipo> implements Ac
 	@Override
 	public List<AcaoTipo> findByTenantId(Integer tenantId) throws GeoGedException
 	{
-		return Optional.of(acaoTipoRepository.findByTenantId(tenantId)).orElseThrow(() -> new RegistroExistsException());
+		return Optional.of(acaoTipoRepository.findByTenant_id(tenantId)).orElseThrow(() -> new RegistroExistsException());
 	}
 
 	@Override

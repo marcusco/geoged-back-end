@@ -11,37 +11,37 @@ import br.com.geoged.service.EquipeColaboradorService;
 
 
 @Service
-public class EquipeColaboradorServiceImpl extends ServiceBaseImpl<EquipeColaborador>
-    implements EquipeColaboradorService {
+public class EquipeColaboradorServiceImpl extends ServiceBaseImpl<EquipeColaborador> implements EquipeColaboradorService
+{
+	@Autowired
+	private EquipeColaboradorRepository equipeColaboradorRepository;
+	@Override
+	public EquipeColaborador save(EquipeColaborador entity)
+	{
+		return equipeColaboradorRepository.save(entity);
+	}
 
-  @Autowired
-  private EquipeColaboradorRepository equipeColaboradorRepository;
+	@Override
+	public Optional<EquipeColaborador> findById(Integer id)
+	{
+		return equipeColaboradorRepository.findById(id);
+	}
 
-  @Override
-  public EquipeColaborador save(EquipeColaborador entity) {
-    return equipeColaboradorRepository.save(entity);
-  }
+	@Override
+	public void delete(EquipeColaborador entity) throws GeoGedException
+	{
+		equipeColaboradorRepository.delete(entity);
+	}
 
-  @Override
-  public Optional<EquipeColaborador> findById(Integer id) {
-    return equipeColaboradorRepository.findById(id);
-  }
+	@Override
+	public List<EquipeColaborador> findAll(Integer tenantId)
+	{
+		return null;
+	}
 
-  @Override
-  public void delete(EquipeColaborador entity) throws GeoGedException {
-    equipeColaboradorRepository.delete(entity);
-
-  }
-
-  @Override
-  public List<EquipeColaborador> findAll(Integer tenantId) {
-    return null;
-  }
-
-  @Override
-  public List<EquipeColaborador> findByTenantIdAndIdEquipe(Integer tenantId, Integer idEquipe) {
-    return equipeColaboradorRepository.findByTenantIdAndIdEquipe(tenantId, idEquipe);
-  }
-
-
+	@Override
+	public List<EquipeColaborador> findByTenantIdAndIdEquipe(Integer tenantId, Integer idEquipe)
+	{
+		return equipeColaboradorRepository.findByTenant_idAndIdEquipe(tenantId, idEquipe);
+	}
 }

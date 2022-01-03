@@ -31,7 +31,7 @@ public class EquipeColaborador implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@Column(name = "nome", length = 255, nullable = false)
 	private String					nome;
 	@JoinColumn(name = "idcolaborador", referencedColumnName = "id")
@@ -78,14 +78,14 @@ public class EquipeColaborador implements Serializable
 		this.nome = nome;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public Colaborador getColaborador()
@@ -111,7 +111,7 @@ public class EquipeColaborador implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(colaborador, equipe, id, nome, tenantId);
+		return Objects.hash(colaborador, equipe, id, nome, tenant_id);
 	}
 
 	@Override
@@ -124,12 +124,12 @@ public class EquipeColaborador implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		EquipeColaborador other = (EquipeColaborador) obj;
-		return Objects.equals(colaborador, other.colaborador) && Objects.equals(equipe, other.equipe) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId);
+		return Objects.equals(colaborador, other.colaborador) && Objects.equals(equipe, other.equipe) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenant_id, other.tenant_id);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "EquipeColaborador [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", colaborador=" + colaborador + ", equipe=" + equipe + "]";
+		return "EquipeColaborador [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", colaborador=" + colaborador + ", equipe=" + equipe + "]";
 	}
 }

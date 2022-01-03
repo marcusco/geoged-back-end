@@ -54,7 +54,7 @@ public class UsuarioServiceImpl extends ServiceBaseImpl<Usuario> implements Usua
 	@Override
 	public List<Usuario> findByTenantId(Integer tenantId)
 	{
-		return usuarioRepository.findByTenantId(tenantId);
+		return usuarioRepository.findByTenant_id(tenantId);
 	}
 
 	@Override

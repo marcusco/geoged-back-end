@@ -30,7 +30,7 @@ public class AcaoTipo implements Serializable
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer				tenantId;
+	private Integer				tenant_id;
 	@NotEmpty(message = "campo.obrigatorio")
 	@Column(name = "nome", length = 255, nullable = false)
 	private String					nome;
@@ -46,12 +46,12 @@ public class AcaoTipo implements Serializable
 
 	public Integer getIdExterno()
 	{
-		return idExterno;
+		return id;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.idExterno = idExterno;
+		this.id = idExterno;
 	}
 
 	public Integer getId()
@@ -74,14 +74,14 @@ public class AcaoTipo implements Serializable
 		this.nome = nome;
 	}
 
-	public Integer getTenantId()
+	public Integer getTenant_id()
 	{
-		return tenantId;
+		return tenant_id;
 	}
 
-	public void setTenantId(Integer tenantId)
+	public void setTenant_id(Integer tenant_id)
 	{
-		this.tenantId = tenantId;
+		this.tenant_id = tenant_id;
 	}
 
 	public AcaoTipoEnum getTipo()
@@ -111,7 +111,7 @@ public class AcaoTipo implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(id, nome, tenantId, tipo);
+		return Objects.hash(id, nome, tenant_id, tipo);
 	}
 
 	@Override
@@ -124,12 +124,12 @@ public class AcaoTipo implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		AcaoTipo other = (AcaoTipo) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenantId, other.tenantId) && Objects.equals(tipo, other.tipo);
+		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenant_id, other.tenant_id) && Objects.equals(tipo, other.tipo);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "AcaoTipo [id=" + id + ", tenantId=" + tenantId + ", nome=" + nome + ", tipo=" + tipo + "]";
+		return "AcaoTipo [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", tipo=" + tipo + "]";
 	}
 }
