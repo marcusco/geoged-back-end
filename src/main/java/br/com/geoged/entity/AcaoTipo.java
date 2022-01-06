@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -19,14 +20,15 @@ import br.com.geoged.util.SchemaUtil;
 @Table(name = "acaotipo", schema = SchemaUtil.DEFAULT, uniqueConstraints = {
 		@UniqueConstraint(columnNames = {"tenant_id", "nome"}),
 		@UniqueConstraint(columnNames = {"tenant_id", "tipo"})})
-public class AcaoTipo implements Serializable
+public class AcaoTipo extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipe")
+	@SequenceGenerator(name = "ACAO_TIPO_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_acaotipo", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACAO_TIPO_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
@@ -44,14 +46,20 @@ public class AcaoTipo implements Serializable
 		super();
 	}
 
+	public AcaoTipo(Integer id)
+	{
+		super();
+		this.id = id;
+	}
+
 	public Integer getIdExterno()
 	{
-		return id;
+		return idExterno;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.id = idExterno;
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()

@@ -1,6 +1,7 @@
 package br.com.geoged.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -12,38 +13,46 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.geoged.util.SchemaUtil;
 
 
 @Entity
 @Table(name = "voocordenadaacao", schema = SchemaUtil.DEFAULT)
-public class VooCordenadaAcao implements Serializable
+public class VooCordenadaAcao extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
-	private static final long		serialVersionUID	= 1L;
+	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_voocordenadaacao")
+	@SequenceGenerator(name = "VOO_CORDENADA_ACAO_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_voocordenadaacao", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOO_CORDENADA_ACAO_GENERATOR")
 	@Column(name = "id", nullable = false)
-	private Integer					id;
+	private Integer				id;
 	@Column(name = "tenant_id")
-	private Integer					tenant_id;
+	private Integer				tenant_id;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataregistro", nullable = false)
-	private Calendar					dataRegistro;
+	private Calendar				dataRegistro;
 	@JoinColumn(name = "idacaotipo", referencedColumnName = "id")
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-	private AcaoTipo					acaoTipo;
-	@JoinColumn(name = "idvoocoordenadaacaobin", referencedColumnName = "id")
+	private AcaoTipo				acaoTipo;
+	@Column(name = "valorclob", columnDefinition = "text")
+	private String					valorClob;
+	@Column(name = "valorblob", columnDefinition = "blob")
+	private byte[]					valorBlob;
+	@JoinColumn(name = "idvoocordenada", referencedColumnName = "id")
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-	private VooCordenadaAcaoBin	acaoCoordenada;
+	private VooCordenada			vooCordenada;
 	@Transient
-	private Integer					idExterno;
+	private Integer				idExterno;
 	//
 	public VooCordenadaAcao()
 	{
@@ -90,16 +99,6 @@ public class VooCordenadaAcao implements Serializable
 		this.acaoTipo = acaoTipo;
 	}
 
-	public VooCordenadaAcaoBin getAcaoCoordenada()
-	{
-		return acaoCoordenada;
-	}
-
-	public void setAcaoCoordenada(VooCordenadaAcaoBin acaoCoordenada)
-	{
-		this.acaoCoordenada = acaoCoordenada;
-	}
-
 	public Calendar getDataRegistro()
 	{
 		return dataRegistro;
@@ -110,10 +109,44 @@ public class VooCordenadaAcao implements Serializable
 		this.dataRegistro = dataRegistro;
 	}
 
+	public String getValorClob()
+	{
+		return valorClob;
+	}
+
+	public void setValorClob(String valorClob)
+	{
+		this.valorClob = valorClob;
+	}
+
+	public byte[] getValorBlob()
+	{
+		return valorBlob;
+	}
+
+	public void setValorBlob(byte[] valorBlob)
+	{
+		this.valorBlob = valorBlob;
+	}
+
+	public VooCordenada getVooCordenada()
+	{
+		return vooCordenada;
+	}
+
+	public void setVooCordenada(VooCordenada vooCordenada)
+	{
+		this.vooCordenada = vooCordenada;
+	}
+
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(acaoCoordenada, acaoTipo, dataRegistro, id, tenant_id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(valorBlob);
+		result = prime * result + Objects.hash(acaoTipo, dataRegistro, id, idExterno, tenant_id, valorClob, vooCordenada);
+		return result;
 	}
 
 	@Override
@@ -126,12 +159,12 @@ public class VooCordenadaAcao implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		VooCordenadaAcao other = (VooCordenadaAcao) obj;
-		return Objects.equals(acaoCoordenada, other.acaoCoordenada) && Objects.equals(acaoTipo, other.acaoTipo) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(tenant_id, other.tenant_id);
+		return Objects.equals(acaoTipo, other.acaoTipo) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(idExterno, other.idExterno) && Objects.equals(tenant_id, other.tenant_id) && Arrays.equals(valorBlob, other.valorBlob) && Objects.equals(valorClob, other.valorClob) && Objects.equals(vooCordenada, other.vooCordenada);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "VooCoordenadaAcao [id=" + id + ", tenant_id=" + tenant_id + ", dataRegistro=" + dataRegistro + ", acaoTipo=" + acaoTipo + ", acaoCoordenada=" + acaoCoordenada + "]";
+		return "VooCordenadaAcao [id=" + id + ", tenant_id=" + tenant_id + ", dataRegistro=" + dataRegistro + ", acaoTipo=" + acaoTipo + ", valorClob=" + valorClob + ", valorBlob=" + Arrays.toString(valorBlob) + ", vooCordenada=" + vooCordenada + ", idExterno=" + idExterno + "]";
 	}
 }

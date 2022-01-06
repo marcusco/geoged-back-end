@@ -11,7 +11,7 @@
 		<!-- <class>br.com.atlanticasoft.orgenejb.entity.Usuario</class> <exclude-unlisted-classes>true</exclude-unlisted-classes> -->
 		<!-- -->
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="${hbm2ddl_auto}" />
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.show_sql" value="${show_sql}" />
 			<property name="hibernate.format_sql" value="${show_sql}" />

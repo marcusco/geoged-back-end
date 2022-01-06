@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -16,14 +17,15 @@ import br.com.geoged.util.SchemaUtil;
 @Entity
 @Table(name = "colaborador", schema = SchemaUtil.DEFAULT, uniqueConstraints = @UniqueConstraint(columnNames = {
 		"tenant_id", "nome", "cpfcnpj"}))
-public class Colaborador implements Serializable
+public class Colaborador extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_colaborador")
+	@SequenceGenerator(name = "COLABORADOR_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_colaborador", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COLABORADOR_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
@@ -34,6 +36,7 @@ public class Colaborador implements Serializable
 	private String					cpfCnpj;
 	@Transient
 	private Integer				idExterno;
+	//
 	public Colaborador()
 	{
 		super();
@@ -46,7 +49,7 @@ public class Colaborador implements Serializable
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.id = idExterno;
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()

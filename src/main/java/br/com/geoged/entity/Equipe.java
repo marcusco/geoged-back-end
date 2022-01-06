@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,14 +23,15 @@ import br.com.geoged.util.SchemaUtil;
 @Entity
 @Table(name = "equipe", schema = SchemaUtil.DEFAULT, uniqueConstraints = {
 		@UniqueConstraint(columnNames = {"tenant_id", "nome"})})
-public class Equipe implements Serializable
+public class Equipe extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long			serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipe")
+	@SequenceGenerator(name = "EQUIPE_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_equipe", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EQUIPE_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer						id;
 	@Column(name = "tenant_id")
@@ -50,14 +52,20 @@ public class Equipe implements Serializable
 		super();
 	}
 
+	public Equipe(Integer id)
+	{
+		super();
+		this.id = id;
+	}
+
 	public Integer getIdExterno()
 	{
-		return id;
+		return idExterno;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.id = idExterno;
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()
@@ -117,7 +125,7 @@ public class Equipe implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(id, nome, tenant_id);
+		return Objects.hash(colaboradores, dataRegistro, id, idExterno, nome, tenant_id);
 	}
 
 	@Override
@@ -130,12 +138,12 @@ public class Equipe implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		Equipe other = (Equipe) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(tenant_id, other.tenant_id);
+		return Objects.equals(colaboradores, other.colaboradores) && Objects.equals(dataRegistro, other.dataRegistro) && Objects.equals(id, other.id) && Objects.equals(idExterno, other.idExterno) && Objects.equals(nome, other.nome) && Objects.equals(tenant_id, other.tenant_id);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Equipe [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + "]";
+		return "Equipe [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", dataRegistro=" + dataRegistro + ", idExterno=" + idExterno + ", colaboradores=" + colaboradores + "]";
 	}
 }

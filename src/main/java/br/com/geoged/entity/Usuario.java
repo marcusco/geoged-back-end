@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -16,14 +17,15 @@ import br.com.geoged.util.SchemaUtil;
 @Entity
 @Table(name = "usuario", schema = SchemaUtil.DEFAULT, uniqueConstraints = @UniqueConstraint(columnNames = {
 		"tenant_id", "email"}))
-public class Usuario implements Serializable
+public class Usuario extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_usuario")
+	@SequenceGenerator(name = "USUARIO_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_usuario", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id", nullable = false)
@@ -42,14 +44,20 @@ public class Usuario implements Serializable
 		super();
 	}
 
+	public Usuario(Integer id)
+	{
+		super();
+		this.id = id;
+	}
+
 	public Integer getIdExterno()
 	{
-		return id;
+		return idExterno;
 	}
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.id = idExterno;
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()
@@ -105,7 +113,7 @@ public class Usuario implements Serializable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(email, id, nome, senha, tenant_id);
+		return Objects.hash(email, id, idExterno, nome, senha, tenant_id);
 	}
 
 	@Override
@@ -118,12 +126,12 @@ public class Usuario implements Serializable
 		if(getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha) && Objects.equals(tenant_id, other.tenant_id);
+		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(idExterno, other.idExterno) && Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha) && Objects.equals(tenant_id, other.tenant_id);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Usuario [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
+		return "Usuario [id=" + id + ", tenant_id=" + tenant_id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", idExterno=" + idExterno + "]";
 	}
 }

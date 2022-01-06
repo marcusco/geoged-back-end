@@ -9,23 +9,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.geoged.util.SchemaUtil;
 
 
 @Entity
 @Table(name = "voocordenadaacaobin", schema = SchemaUtil.DEFAULT)
-public class VooCordenadaAcaoBin implements Serializable
+public class VooCordenadaAcaoBin extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_voocordenadaacaobin")
+	@SequenceGenerator(name = "VOO_CORDENADA_ACAO_BIN_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_voocordenadaacaobin", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOO_CORDENADA_ACAO_BIN_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
@@ -42,6 +45,7 @@ public class VooCordenadaAcaoBin implements Serializable
 	private String					valorClob;
 	@Column(name = "valorblob", columnDefinition = "blob")
 	private byte[]					valorBlob;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataregistro", nullable = false)
 	private Calendar				dataRegistro;
@@ -54,7 +58,7 @@ public class VooCordenadaAcaoBin implements Serializable
 
 	public Integer getIdExterno()
 	{
-		return idExterno;
+		return id;
 	}
 
 	public void setIdExterno(Integer idExterno)

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import br.com.geoged.dto.VooDTO;
 import br.com.geoged.entity.Voo;
 import br.com.geoged.exceptions.GeoGedException;
 import br.com.geoged.service.VooService;
@@ -39,11 +40,11 @@ public class VooResource
 	}
 
 	@PostMapping(value = "/save_all")
-	public ResponseEntity<List<Voo>> saveAll(@RequestBody List<Voo> entity) throws GeoGedException
+	public ResponseEntity<List<VooDTO>> saveAll(@RequestBody List<VooDTO> entity) throws GeoGedException
 	{
-		ResponseEntity<List<Voo>> response;
+		ResponseEntity<List<VooDTO>> response;
 		// nver name
-		var tmp = vooService.save(entity);
+		var tmp = vooService.saveDTO(entity);
 		if(!CollectionsUtil.isEmpty(tmp))
 		{
 			response = ResponseEntity.ok(tmp);

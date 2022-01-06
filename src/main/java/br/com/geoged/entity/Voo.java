@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,14 +27,15 @@ import br.com.geoged.util.SchemaUtil;
 @Entity
 @Table(name = "voo", schema = SchemaUtil.DEFAULT, uniqueConstraints = @UniqueConstraint(columnNames = {"tenant_id",
 		"nome", "dataregistro"}))
-public class Voo implements Serializable
+public class Voo extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_voo")
+	@SequenceGenerator(name = "VOO_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_voo", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOO_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
@@ -65,9 +67,14 @@ public class Voo implements Serializable
 		cordenadas = new ArrayList<>();
 	}
 
+	public Voo(Integer id)
+	{
+		this.id = id;
+	}
+
 	public Integer getIdExterno()
 	{
-		return id;
+		return idExterno;
 	}
 
 	public void setIdExterno(Integer idExterno)

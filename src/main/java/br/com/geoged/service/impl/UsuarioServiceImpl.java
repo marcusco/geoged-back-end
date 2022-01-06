@@ -19,10 +19,13 @@ public class UsuarioServiceImpl extends ServiceBaseImpl<Usuario> implements Usua
 {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	//
 	@Override
 	@Transactional(value = TxType.REQUIRED)
 	public Usuario save(Usuario entity) throws GeoGedException
 	{
+		super.save(entity);
+		//
 		try
 		{
 			return usuarioRepository.save(entity);

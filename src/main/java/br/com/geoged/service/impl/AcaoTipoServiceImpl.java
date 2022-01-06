@@ -22,7 +22,6 @@ public class AcaoTipoServiceImpl extends ServiceBaseImpl<AcaoTipo> implements Ac
 	@Transactional(value = TxType.REQUIRED)
 	public AcaoTipo save(AcaoTipo entity) throws GeoGedException
 	{
-		preSave(entity);
 		return acaoTipoRepository.save(entity);
 	}
 
@@ -34,7 +33,6 @@ public class AcaoTipoServiceImpl extends ServiceBaseImpl<AcaoTipo> implements Ac
 	@Override
 	public void delete(AcaoTipo entity) throws GeoGedException
 	{
-		preDelete(entity);
 		acaoTipoRepository.delete(entity);
 	}
 
@@ -63,7 +61,7 @@ public class AcaoTipoServiceImpl extends ServiceBaseImpl<AcaoTipo> implements Ac
 	}
 
 	@Override
-	protected void preSave(AcaoTipo entity) throws GeoGedException
+	protected void beforeSave(AcaoTipo entity) throws GeoGedException
 	{
 		if(entity.getNome().isBlank())
 		{
@@ -76,7 +74,7 @@ public class AcaoTipoServiceImpl extends ServiceBaseImpl<AcaoTipo> implements Ac
 	}
 
 	@Override
-	protected void preDelete(AcaoTipo entity) throws GeoGedException
+	protected void beforeDelete(AcaoTipo entity) throws GeoGedException
 	{
 		if(entity.getId() == null)
 		{

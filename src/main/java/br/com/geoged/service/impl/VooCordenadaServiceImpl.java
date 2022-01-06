@@ -1,6 +1,7 @@
 package br.com.geoged.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,47 +14,58 @@ import br.com.geoged.service.VooCordenadaService;
 
 
 @Service
-public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada>
-    implements VooCordenadaService {
+public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> implements VooCordenadaService
+{
+	@Autowired
+	private VooCordenadaRepository	vooCordenadaRepository;
+	@Autowired
+	private VooCordenadaAcaoService	vooCordenadaAcaoService;
+	@Override
+	public VooCordenada save(VooCordenada entity)
+	{
+		List<VooCordenadaAcao> tmp = new ArrayList<>();
+		tmp.addAll(vooCordenadaAcaoService.saveAll(entity.getAcoes()));
+		entity.setAcoes(tmp);
+		return vooCordenadaRepository.save(entity);
+	}
 
-  @Autowired
-  private VooCordenadaRepository vooCordenadaRepository;
-  @Autowired
-  private VooCordenadaAcaoService vooCordenadaAcaoService;
+	public Optional<VooCordenada> findById(Integer id)
+	{
+		return vooCordenadaRepository.findById(id);
+	}
 
-  @Override
-  public VooCordenada save(VooCordenada entity) {
-    List<VooCordenadaAcao> tmp = new ArrayList<>();
-    tmp.addAll(vooCordenadaAcaoService.saveAll(entity.getAcoes()));
-    entity.setAcoes(tmp);
-    return vooCordenadaRepository.save(entity);
-  }
+	@Override
+	public void delete(VooCordenada entity)
+	{
+		vooCordenadaRepository.delete(entity);
+	}
 
-  public Optional<VooCordenada> findById(Integer id) {
-    return vooCordenadaRepository.findById(id);
-  }
+	@Override
+	public List<VooCordenada> findAll(Integer tenantId)
+	{
+		return vooCordenadaRepository.findAll();
+	}
 
-  @Override
-  public void delete(VooCordenada entity) {
-    vooCordenadaRepository.delete(entity);
-  }
+	@Override
+	public List<VooCordenada> saveAll(List<VooCordenada> cordenadas)
+	{
+		List<VooCordenada> tmp = new ArrayList<>();
+		for(VooCordenada cordenada : cordenadas)
+		{
+			tmp.add(save(cordenada));
+		}
+		return tmp;
+	}
 
-  @Override
-  public List<VooCordenada> findAll(Integer tenantId) {
-    return vooCordenadaRepository.findAll();
-  }
+	@Override
+	public List<VooCordenada> findByTenantId(Integer tenantId)
+	{
+		return null;
+	}
 
-  @Override
-  public List<VooCordenada> saveAll(List<VooCordenada> cordenadas) {
-    List<VooCordenada> tmp = new ArrayList<>();
-    for (VooCordenada cordenada : cordenadas) {
-      tmp.add(save(cordenada));
-    }
-    return tmp;
-  }
-
-  @Override
-  public List<VooCordenada> findByTenantId(Integer tenantId) {
-    return null;
-  }
+	@Override
+	public VooCordenada findByTenantIAndAndIdVooAndDataRegistroAndLatitudeAndLongitudeAndAltitude(Integer tenant_id, Integer idVoo, Calendar dataRegistro, Double latitude, Double longitude, Double altitude)
+	{
+		return vooCordenadaRepository.findByTenantIAndAndIdVooAndDataRegistroAndLatitudeAndLongitudeAndAltitude(tenant_id, idVoo, dataRegistro, latitude, longitude, altitude);
+	}
 }

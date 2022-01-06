@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -21,14 +22,15 @@ import br.com.geoged.util.SchemaUtil;
 @Table(name = "equipamentogrupo", schema = SchemaUtil.DEFAULT, uniqueConstraints = {
 		@UniqueConstraint(columnNames = {"tenant_id", "nome"}),
 		@UniqueConstraint(columnNames = {"tenant_id", "idequipamento"})})
-public class EquipamentoGrupo implements Serializable
+public class EquipamentoGrupo extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipamentogrupo")
+	@SequenceGenerator(name = "EQUIPAMENTO_GRUPO_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_equipamentogrupo", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EQUIPAMENTO_GRUPO_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")

@@ -1,6 +1,7 @@
 package br.com.geoged.service;
 
 import java.util.List;
+import br.com.geoged.dto.VooDTO;
 import br.com.geoged.entity.Voo;
 
 
@@ -12,5 +13,5 @@ public interface VooService extends IServiceBase<Voo>
 
 	public List<Voo> findByTenantId(Integer tenantId);
 
-	public List<Voo> save(List<Voo> list);
+	public List<VooDTO> saveDTO(List<VooDTO> dtos);
 }

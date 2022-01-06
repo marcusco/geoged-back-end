@@ -14,23 +14,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.geoged.util.SchemaUtil;
 
 
 @Entity
 @Table(name = "voocordenada", schema = SchemaUtil.DEFAULT)
-public class VooCordenada implements Serializable
+public class VooCordenada extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long			serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_voocordenada")
+	@SequenceGenerator(name = "VOO_CORDENADA_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_voocordenada", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOO_CORDENADA_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer						id;
 	@Column(name = "tenant_id", nullable = false)
@@ -41,6 +44,7 @@ public class VooCordenada implements Serializable
 	private Double							longitude;
 	@Column(name = "altitude", nullable = false, columnDefinition = "double precision")
 	private Double							altitude;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dataregistro", nullable = false)
 	private Calendar						dataRegistro;
@@ -54,6 +58,11 @@ public class VooCordenada implements Serializable
 	public VooCordenada()
 	{
 		super();
+	}
+
+	public VooCordenada(Integer id)
+	{
+		this.id = id;
 	}
 
 	public Integer getIdExterno()

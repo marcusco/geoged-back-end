@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -17,14 +18,15 @@ import br.com.geoged.util.SchemaUtil;
 @Entity
 @Table(name = "equipamento", schema = SchemaUtil.DEFAULT, uniqueConstraints = @UniqueConstraint(columnNames = {
 		"tenant_id", "serie"}))
-public class Equipamento implements Serializable
+public class Equipamento extends EntityBase implements Serializable
 {
 	/**
 	* 
 	*/
 	private static final long	serialVersionUID	= 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SchemaUtil.DEFAULT + ".seq_equipamento")
+	@SequenceGenerator(name = "EQUIPAMENTO_GENERATOR", sequenceName = SchemaUtil.DEFAULT + ".seq_equipamento", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EQUIPAMENTO_GENERATOR")
 	@Column(name = "id", nullable = false)
 	private Integer				id;
 	@Column(name = "tenant_id")
@@ -45,6 +47,12 @@ public class Equipamento implements Serializable
 		super();
 	}
 
+	public Equipamento(Integer id)
+	{
+		super();
+		this.id = id;
+	}
+
 	public Integer getIdExterno()
 	{
 		return id;
@@ -52,7 +60,7 @@ public class Equipamento implements Serializable
 
 	public void setIdExterno(Integer idExterno)
 	{
-		this.id = idExterno;
+		this.idExterno = idExterno;
 	}
 
 	public Integer getId()
