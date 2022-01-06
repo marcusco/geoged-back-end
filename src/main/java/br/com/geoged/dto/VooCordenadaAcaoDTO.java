@@ -2,6 +2,7 @@ package br.com.geoged.dto;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 public class VooCordenadaAcaoDTO implements Serializable
@@ -15,6 +16,7 @@ public class VooCordenadaAcaoDTO implements Serializable
 	private Integer				idExterno;
 	private Integer				idAcaoTipo;
 	private Integer				idVooCordenada;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Calendar				dataRegistro;
 	private String					valorClob;
 	private byte[]					valorBlob;

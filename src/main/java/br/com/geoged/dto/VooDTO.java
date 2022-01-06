@@ -3,6 +3,7 @@ package br.com.geoged.dto;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 public class VooDTO implements Serializable
@@ -19,6 +20,7 @@ public class VooDTO implements Serializable
 	private Integer					idEquipamento;
 	private String						nome;
 	private String						descricao;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Calendar					dataRegistro;
 	private List<VooCordenadaDTO>	cordenadas;
 	//
