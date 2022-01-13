@@ -57,11 +57,11 @@ public class VooResource
 	}
 
 	@PostMapping(value = "/save")
-	public ResponseEntity<Voo> save(@RequestBody Voo entity) throws GeoGedException
+	public ResponseEntity<VooDTO> save(@RequestBody VooDTO entity) throws GeoGedException
 	{
-		ResponseEntity<Voo> response;
+		ResponseEntity<VooDTO> response;
 		// nver name
-		var tmp = vooService.save(entity);
+		var tmp = vooService.saveDTO(entity);
 		if(tmp != null)
 		{
 			response = ResponseEntity.ok(tmp);

@@ -81,10 +81,4 @@ public class AcaoTipoServiceImpl extends ServiceBaseImpl<AcaoTipo> implements Ac
 			throw new GeoGedException("campos.obrigatorios");
 		}
 	}
-
-	@Override
-	public List<AcaoTipo> findAll(Integer tenantId)
-	{
-		return null;
-	}
 }

@@ -10,36 +10,36 @@ import br.com.geoged.service.VooCordenadaAcaoBinService;
 
 
 @Service
-public class VooCordenadaAcaoBinServiceImpl extends ServiceBaseImpl<VooCordenadaAcaoBin>
-    implements VooCordenadaAcaoBinService {
+public class VooCordenadaAcaoBinServiceImpl extends ServiceBaseImpl<VooCordenadaAcaoBin> implements VooCordenadaAcaoBinService
+{
+	@Autowired
+	private VooCordenadaAcaoBinRepository vooCordenadaAcaoBinRepository;
+	@Override
+	public VooCordenadaAcaoBin save(VooCordenadaAcaoBin entity)
+	{
+		return vooCordenadaAcaoBinRepository.save(entity);
+	}
 
-  @Autowired
-  private VooCordenadaAcaoBinRepository vooCordenadaAcaoBinRepository;
+	public Optional<VooCordenadaAcaoBin> findById(Integer id)
+	{
+		return vooCordenadaAcaoBinRepository.findById(id);
+	}
 
-  @Override
-  public VooCordenadaAcaoBin save(VooCordenadaAcaoBin entity) {
-    return vooCordenadaAcaoBinRepository.save(entity);
-  }
+	@Override
+	public void delete(VooCordenadaAcaoBin entity)
+	{
+		vooCordenadaAcaoBinRepository.delete(entity);
+	}
 
-  public Optional<VooCordenadaAcaoBin> findById(Integer id) {
-    return vooCordenadaAcaoBinRepository.findById(id);
-  }
+	@Override
+	public List<VooCordenadaAcaoBin> findAll(Integer tenantId)
+	{
+		return vooCordenadaAcaoBinRepository.findAll();
+	}
 
-  @Override
-  public void delete(VooCordenadaAcaoBin entity) {
-    vooCordenadaAcaoBinRepository.delete(entity);
-  }
-
-  @Override
-  public List<VooCordenadaAcaoBin> findAll(Integer tenantId) {
-    return vooCordenadaAcaoBinRepository.findAll();
-  }
-
-  @Override
-  public List<VooCordenadaAcaoBin> findByTenantId(Integer tenantId) {
-    return null;
-  }
-
-
-
+	@Override
+	public List<VooCordenadaAcaoBin> findByTenantId(Integer tenantId)
+	{
+		return null;
+	}
 }

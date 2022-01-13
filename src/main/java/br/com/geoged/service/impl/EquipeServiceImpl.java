@@ -10,40 +10,42 @@ import br.com.geoged.service.EquipeService;
 
 
 @Service
-public class EquipeServiceImpl extends ServiceBaseImpl<Equipe> implements EquipeService {
+public class EquipeServiceImpl extends ServiceBaseImpl<Equipe> implements EquipeService
+{
+	@Autowired
+	private EquipeRepository equipeRepository;
+	@Override
+	public Equipe save(Equipe entity)
+	{
+		return equipeRepository.save(entity);
+	}
 
-  @Autowired
-  private EquipeRepository equipeRepository;
+	public Optional<Equipe> findById(Integer id)
+	{
+		return equipeRepository.findById(id);
+	}
 
-  @Override
-  public Equipe save(Equipe entity) {
-    return equipeRepository.save(entity);
-  }
+	@Override
+	public void delete(Equipe entity)
+	{
+		equipeRepository.delete(entity);
+	}
 
-  public Optional<Equipe> findById(Integer id) {
-    return equipeRepository.findById(id);
-  }
+	@Override
+	public List<Equipe> findByTenantId(Integer tenantId)
+	{
+		return equipeRepository.findByTenantId(tenantId);
+	}
 
-  @Override
-  public void delete(Equipe entity) {
-    equipeRepository.delete(entity);
-  }
+	@Override
+	public Equipe findByNome(Integer tenantId, String nome)
+	{
+		return equipeRepository.findByNome(tenantId, nome);
+	}
 
-  @Override
-  public List<Equipe> findByTenantId(Integer tenantId) {
-    return equipeRepository.findByTenantId(tenantId);
-  }
-
-  @Override
-  public Equipe findByNome(Integer tenantId, String nome) {
-    return equipeRepository.findByNome(tenantId, nome);
-  }
-
-  @Override
-  public List<Equipe> findAll(Integer tenantId) {
-    return null;
-  }
-
-
-
+	@Override
+	public List<Equipe> findAll(Integer tenantId)
+	{
+		return null;
+	}
 }

@@ -14,4 +14,6 @@ public interface VooService extends IServiceBase<Voo>
 	public List<Voo> findByTenantId(Integer tenantId);
 
 	public List<VooDTO> saveDTO(List<VooDTO> dtos);
+
+	public VooDTO saveDTO(VooDTO dto);
 }

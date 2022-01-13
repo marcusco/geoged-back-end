@@ -7,13 +7,13 @@ import br.com.geoged.exceptions.GeoGedException;
 
 public interface IServiceBase<T>
 {
-	public abstract T save(T entity) throws GeoGedException;
+	public T save(T entity) throws GeoGedException;
 
-	public abstract List<T> save(List<T> list) throws GeoGedException;
+	public List<T> save(List<T> list) throws GeoGedException;
 
-	public abstract Optional<T> findById(Integer id);
+	public Optional<T> findById(Integer id);
 
 	public void delete(T entity) throws GeoGedException;
 
-	public abstract List<T> findAll(Integer tenantId);
+	public List<T> findAll(Integer tenantId);
 }

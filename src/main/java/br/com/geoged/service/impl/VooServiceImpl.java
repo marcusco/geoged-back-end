@@ -205,4 +205,13 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		acao.setDataRegistro(dto.getDataRegistro());
 		return acao;
 	}
+
+	@Override
+	public VooDTO saveDTO(VooDTO dto)
+	{
+		var tmp = convertDtoToClassVoo(dto);
+		tmp = vooRepository.save(tmp);
+		dto.setIdExterno(tmp.getId());
+		return dto;
+	}
 }
