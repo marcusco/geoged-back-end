@@ -1,6 +1,5 @@
 package br.com.geoged.rest.resource;
 
-import java.io.IOException;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.geoged.dto.VooCordenadaAcaoDTO;
 import br.com.geoged.exceptions.GeoGedException;
 import br.com.geoged.service.VooCordenadaAcaoService;
@@ -23,6 +25,7 @@ public class VooCoordenadaAcaoResource
 {
 	@Autowired
 	private VooCordenadaAcaoService vooCordenadaAcaoService;
+	//
 	@GetMapping(value = "/find_by_tenant_id")
 	public Response findByTenantId(@QueryParam(value = "tenantId") Integer tenantId)
 	{
@@ -40,13 +43,14 @@ public class VooCoordenadaAcaoResource
 	}
 
 	@PostMapping(value = "/save")
-	public ResponseEntity<VooCordenadaAcaoDTO> salvar(@RequestPart MultipartFile bin) throws GeoGedException
+	public ResponseEntity<VooCordenadaAcaoDTO> salvar(@QueryParam("json") String json, @RequestPart("file") MultipartFile file) throws GeoGedException, JsonMappingException, JsonProcessingException
 	{
 		ResponseEntity<VooCordenadaAcaoDTO> response;
+		var objectMapper = new ObjectMapper();
+		VooCordenadaAcaoDTO entity = objectMapper.readValue(json, VooCordenadaAcaoDTO.class);
 		try
 		{
-			VooCordenadaAcaoDTO entity = new VooCordenadaAcaoDTO();
-			entity.setValorBlob(bin.getBytes());
+			entity.setValorBlob(file.getBytes());
 			var tmp = vooCordenadaAcaoService.saveDTO(entity);
 			if(tmp != null)
 			{
@@ -57,7 +61,7 @@ public class VooCoordenadaAcaoResource
 				response = ResponseEntity.noContent().build();
 			}
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			response = ResponseEntity.noContent().build();
 		}

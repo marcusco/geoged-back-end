@@ -64,6 +64,7 @@ public class VooCordenadaAcaoServiceImpl extends ServiceBaseImpl<VooCordenadaAca
 		var tmp = convertDtoToClassVooCordenadaAcao(dto);
 		tmp = vooCordenadaAcaoRepository.save(tmp);
 		dto.setIdExterno(tmp.getId());
+		dto.setValorBlob(null);
 		return dto;
 	}
 
