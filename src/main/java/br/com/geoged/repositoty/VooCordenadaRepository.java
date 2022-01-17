@@ -11,4 +11,7 @@ public interface VooCordenadaRepository extends JpaRepository<VooCordenada, Inte
 {
 	@Query("select e from VooCordenada e where e.tenant_id = :tenant_id and e.dataRegistro = :dataRegistro and e.voo.id = :idVoo and e.latitude = :latitude and e.longitude = :longitude and e.altitude = :altitude")
 	public VooCordenada findByTenantIAndAndIdVooAndDataRegistroAndLatitudeAndLongitudeAndAltitude(@Param("tenant_id") Integer tenant_id, @Param("idVoo") Integer idVoo, @Param("dataRegistro") Calendar dataRegistro, @Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("altitude") Double altitude);
+
+	@Query("select e from VooCordenada e where e.tenant_id = :tenant_id and e.voo.id = :idVoo and e.dataRegistro = :dataRegistro")
+	public VooCordenada findByTenantIAndAndIdVooAndDataRegistro(@Param("tenant_id") Integer tenant_id, @Param("idVoo") Integer idVoo, @Param("dataRegistro") Calendar dataRegistro);
 }

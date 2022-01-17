@@ -209,8 +209,12 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	@Override
 	public VooDTO saveDTO(VooDTO dto)
 	{
-		var tmp = convertDtoToClassVoo(dto);
-		tmp = vooRepository.save(tmp);
+		var tmp = vooRepository.findByTenantIAndNomeAndDataRegistro(dto.getTenant_id(), dto.getNome(), dto.getDataRegistro());
+		if(tmp == null)
+		{
+			tmp = convertDtoToClassVoo(dto);
+			tmp = vooRepository.save(tmp);
+		}
 		dto.setIdExterno(tmp.getId());
 		return dto;
 	}

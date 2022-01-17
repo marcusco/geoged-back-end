@@ -22,4 +22,7 @@ public interface VooRepository extends JpaRepository<Voo, Integer>
 
 	@Query("select e from Voo e where e.tenant_id = :tenant_id and e.descricao = :descricao and e.nome = :nome and e.dataRegistro = :dataRegistro")
 	public Voo findByTenantIAndDescricaoAndNomeAndDataRegistro(@Param("tenant_id") Integer tenant_id, @Param("descricao") String descricao, @Param("nome") String nome, @Param("dataRegistro") Calendar dataRegistro);
+
+	@Query("select e from Voo e where e.tenant_id = :tenant_id and e.nome = :nome and e.dataRegistro = :dataRegistro")
+	public Voo findByTenantIAndNomeAndDataRegistro(@Param("tenant_id") Integer tenant_id, @Param("nome") String nome, @Param("dataRegistro") Calendar dataRegistro);
 }

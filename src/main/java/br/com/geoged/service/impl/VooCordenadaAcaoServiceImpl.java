@@ -61,8 +61,12 @@ public class VooCordenadaAcaoServiceImpl extends ServiceBaseImpl<VooCordenadaAca
 	@Override
 	public VooCordenadaAcaoDTO saveDTO(VooCordenadaAcaoDTO dto)
 	{
-		var tmp = convertDtoToClassVooCordenadaAcao(dto);
-		tmp = vooCordenadaAcaoRepository.save(tmp);
+		var tmp = vooCordenadaAcaoRepository.findByTenantIAndAIdVooCordenadaAndIdAcaoTipoAndDataRegistro(dto.getTenant_id(), dto.getIdVooCordenada(), dto.getIdAcaoTipo(), dto.getDataRegistro());
+		if(tmp == null)
+		{
+			tmp = convertDtoToClassVooCordenadaAcao(dto);
+			tmp = vooCordenadaAcaoRepository.save(tmp);
+		}
 		dto.setIdExterno(tmp.getId());
 		dto.setValorBlob(null);
 		return dto;

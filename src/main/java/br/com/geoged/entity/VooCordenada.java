@@ -19,12 +19,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.geoged.util.SchemaUtil;
 
 
 @Entity
-@Table(name = "voocordenada", schema = SchemaUtil.DEFAULT)
+@Table(name = "voocordenada", schema = SchemaUtil.DEFAULT, uniqueConstraints = @UniqueConstraint(columnNames = {
+		"tenant_id", "idvoo", "dataregistro"}))
 public class VooCordenada extends EntityBase implements Serializable
 {
 	/**

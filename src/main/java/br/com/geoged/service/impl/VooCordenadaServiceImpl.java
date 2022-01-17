@@ -74,8 +74,12 @@ public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> imple
 	@Override
 	public VooCordenadaDTO saveDTO(VooCordenadaDTO dto)
 	{
-		var tmp = convertDtoToClassVooCordenada(dto);
-		tmp = vooCordenadaRepository.save(tmp);
+		var tmp = vooCordenadaRepository.findByTenantIAndAndIdVooAndDataRegistro(dto.getTenant_id(), dto.getIdVoo(), dto.getDataRegistro());
+		if(tmp == null)
+		{
+			tmp = convertDtoToClassVooCordenada(dto);
+			tmp = vooCordenadaRepository.save(tmp);
+		}
 		dto.setIdExterno(tmp.getId());
 		return dto;
 	}
