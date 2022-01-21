@@ -66,7 +66,7 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	@Override
 	public List<Voo> findByTenantId(Integer tenantId)
 	{
-		return vooRepository.findBytenant_id(tenantId).orElseThrow(() -> new GeoGedException("sem.dados"));
+		return vooRepository.findByTenant_id(tenantId).orElseThrow(() -> new GeoGedException("sem.dados"));
 	}
 
 	@Override

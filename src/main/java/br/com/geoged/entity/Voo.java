@@ -49,13 +49,13 @@ public class Voo extends EntityBase implements Serializable
 	@Column(name = "dataregistro", nullable = false)
 	private Calendar				dataRegistro;
 	@JoinColumn(name = "idusuario", referencedColumnName = "id")
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Usuario				usuario;
 	@JoinColumn(name = "idequipe", referencedColumnName = "id")
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Equipe					equipe;
 	@JoinColumn(name = "idequipamento", referencedColumnName = "id")
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Equipamento			equipamento;
 	@Transient
 	private Integer				idExterno;

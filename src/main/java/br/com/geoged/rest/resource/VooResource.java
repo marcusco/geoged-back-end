@@ -1,10 +1,10 @@
 package br.com.geoged.rest.resource;
 
 import java.util.List;
-import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +23,11 @@ public class VooResource
 	@Autowired
 	private VooService vooService;
 	//
-	@GetMapping(value = "/find_by_tenant_id")
-	public ResponseEntity<List<Voo>> findByTenantId(@QueryParam(value = "tenantId") Integer tenantId)
+	@GetMapping(value = "/find_by_tenant_id/{tenant_id}")
+	public ResponseEntity<List<Voo>> findByTenantId(@PathVariable Integer tenant_id)
 	{
 		ResponseEntity<List<Voo>> response;
-		var tmp = vooService.findByTenantId(tenantId);
+		var tmp = vooService.findByTenantId(tenant_id);
 		if(!CollectionsUtil.isEmpty(tmp))
 		{
 			response = ResponseEntity.ok(tmp);
