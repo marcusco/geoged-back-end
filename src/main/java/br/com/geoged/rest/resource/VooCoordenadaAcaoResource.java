@@ -1,11 +1,13 @@
 package br.com.geoged.rest.resource;
 
+import java.util.List;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -15,6 +17,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.geoged.dto.VooCordenadaAcaoDTO;
+import br.com.geoged.dto.VooCordenadaAcaoMapaDTO;
+import br.com.geoged.entity.VooCordenadaAcao;
 import br.com.geoged.exceptions.GeoGedException;
 import br.com.geoged.service.VooCordenadaAcaoService;
 
@@ -67,4 +71,23 @@ public class VooCoordenadaAcaoResource
 		}
 		return response;
 	}
+	
+	@GetMapping(value = "/find_by_idvoocordenadaacao/{idVooCordenadaAcao}")
+	public ResponseEntity<VooCordenadaAcao> findByIdVooCordenadaAcao(@PathVariable Integer idVooCordenadaAcao)
+	{
+		ResponseEntity<VooCordenadaAcao> response;
+		var tmp = vooCordenadaAcaoService.findByIdVooCordenadaAcao(idVooCordenadaAcao);
+		if(tmp != null)
+		{
+			tmp.setAcaoTipo(null);
+			tmp.setVooCordenada(null);
+			response = ResponseEntity.ok(tmp);
+		}
+		else
+		{
+			response = ResponseEntity.noContent().build();
+		}
+		return response;
+	}
+	
 }

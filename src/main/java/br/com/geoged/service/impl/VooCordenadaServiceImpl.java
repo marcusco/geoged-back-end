@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import br.com.geoged.dto.VooCordenadaAcaoMapaDTO;
 import br.com.geoged.dto.VooCordenadaDTO;
 import br.com.geoged.entity.Voo;
 import br.com.geoged.entity.VooCordenada;
@@ -96,5 +97,11 @@ public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> imple
 		cordenada.setDataRegistro(dto.getDataRegistro());
 		cordenada.setVoo(new Voo(dto.getIdVoo()));
 		return cordenada;
+	}
+
+	@Override
+	public List<VooCordenadaAcaoMapaDTO> findVooCordenadaAcaoDTOByIdVoo(Integer idVoo)
+	{
+		return vooCordenadaRepository.findVooCordenadaAcaoDTOByIdVoo(idVoo);
 	}
 }

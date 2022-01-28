@@ -85,4 +85,10 @@ public class VooCordenadaAcaoServiceImpl extends ServiceBaseImpl<VooCordenadaAca
 		acao.setVooCordenada(new VooCordenada(dto.getIdVooCordenada()));
 		return acao;
 	}
+
+	@Override
+	public VooCordenadaAcao findByIdVooCordenadaAcao(Integer id)
+	{
+		return vooCordenadaAcaoRepository.findByIdVooCordenadaAcao(id);
+	}
 }
