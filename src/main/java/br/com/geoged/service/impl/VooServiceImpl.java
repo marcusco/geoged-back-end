@@ -218,4 +218,10 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		dto.setIdExterno(tmp.getId());
 		return dto;
 	}
+
+	@Override
+	public Integer countByTenantI(Integer tenant_id)
+	{
+		return vooRepository.countByTenantI(tenant_id);
+	}
 }

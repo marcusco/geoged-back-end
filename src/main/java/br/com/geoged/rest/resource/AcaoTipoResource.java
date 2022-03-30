@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,7 +62,7 @@ public class AcaoTipoResource
 		return response;
 	}
 
-	@PostMapping(value = "/delete")
+	@DeleteMapping(value = "/delete")
 	public ResponseEntity<AcaoTipo> delete(@RequestBody AcaoTipo entity) throws GeoGedException
 	{
 		ResponseEntity<AcaoTipo> response;

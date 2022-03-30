@@ -39,6 +39,22 @@ public class VooResource
 		return response;
 	}
 
+	@GetMapping(value = "/count_by_tenant_id/{tenant_id}")
+	public ResponseEntity<Integer> countByTenantId(@PathVariable Integer tenant_id)
+	{
+		ResponseEntity<Integer> response;
+		var tmp = vooService.countByTenantI(tenant_id);
+		if(tmp > 0)
+		{
+			response = ResponseEntity.ok(tmp);
+		}
+		else
+		{
+			response = ResponseEntity.notFound().build();
+		}
+		return response;
+	}
+
 	@PostMapping(value = "/save_all")
 	public ResponseEntity<List<VooDTO>> saveAll(@RequestBody List<VooDTO> entity) throws GeoGedException
 	{
