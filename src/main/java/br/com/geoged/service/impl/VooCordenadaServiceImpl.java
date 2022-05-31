@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.geoged.controller.Message;
 import br.com.geoged.controller.MessagesController;
+import br.com.geoged.controller.WebSocketSendServiceImpl;
 import br.com.geoged.dto.VooCordenadaAcaoMapaDTO;
 import br.com.geoged.dto.VooCordenadaDTO;
 import br.com.geoged.entity.Voo;
@@ -21,14 +22,11 @@ import br.com.geoged.service.VooCordenadaService;
 @Service
 public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> implements VooCordenadaService
 {
+	private Integer						contador	= 0;
 	@Autowired
 	private VooCordenadaRepository	vooCordenadaRepository;
 	@Autowired
 	private VooCordenadaAcaoService	vooCordenadaAcaoService;
-	@Autowired
-	private MessagesController messagesControler;
-	private Integer contador = 0;
-	
 	@Override
 	public VooCordenada save(VooCordenada entity)
 	{
@@ -89,7 +87,7 @@ public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> imple
 		}
 		try
 		{
-			messagesControler.greeting(new Message(contador++ +""));
+			WebSocketSendServiceImpl.getInstance().send("/topic/latlng", new Message(contador++ + "").getName().getBytes());
 		}
 		catch (Exception e)
 		{

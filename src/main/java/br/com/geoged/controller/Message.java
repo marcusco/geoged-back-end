@@ -3,6 +3,8 @@ package br.com.geoged.controller;
 public class Message
 {
 	private String name;
+   private String content;
+
 
    public Message() {}
 
@@ -16,5 +18,11 @@ public class Message
 
    public void setName(String name) {
        this.name = name;
+   }
+   
+
+
+   public String getContent() {
+       return content;
    }
 }
