@@ -2,6 +2,8 @@ package br.com.geoged.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.web.socket.WebSocketHttpHeaders;
@@ -12,12 +14,14 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-
 public class WebSocketSendServiceImpl
 {
 	/**
 	 * 
 	 */
+	@Autowired
+	private Environment env;
+	//
 	private String								url	= "ws://127.0.0.1:8080/rest/ws";
 	private static StompSession			stompSession;
 	private final WebSocketClient			webSocketClient;
@@ -25,6 +29,7 @@ public class WebSocketSendServiceImpl
 	private final StompSessionHandler	sessionHandler;
 	private WebSocketSendServiceImpl()
 	{
+		url = env.getProperty("system.ws.url");
 		List<Transport> transports = new ArrayList<Transport>();
 		transports.add(new WebSocketTransport(new StandardWebSocketClient()));
 		webSocketClient = new SockJsClient(transports);
