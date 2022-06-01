@@ -17,12 +17,15 @@ import br.com.geoged.entity.VooCordenadaAcao;
 import br.com.geoged.repositoty.VooCordenadaRepository;
 import br.com.geoged.service.VooCordenadaAcaoService;
 import br.com.geoged.service.VooCordenadaService;
+import br.com.geoged.util.PropertiesUtil;
 
 
 @Service
 public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> implements VooCordenadaService
 {
 	private Integer						contador	= 0;
+	@Autowired
+	private PropertiesUtil env;
 	@Autowired
 	private VooCordenadaRepository	vooCordenadaRepository;
 	@Autowired
@@ -87,7 +90,7 @@ public class VooCordenadaServiceImpl extends ServiceBaseImpl<VooCordenada> imple
 		}
 		try
 		{
-			WebSocketSendServiceImpl.getInstance().send("/topic/latlng", new Message(contador++ + "").getName().getBytes());
+			WebSocketSendServiceImpl.getInstance(env).send("/topic/latlng", new Message(contador++ + "").getName().getBytes());
 		}
 		catch (Exception e)
 		{
