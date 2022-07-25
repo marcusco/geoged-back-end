@@ -9,7 +9,7 @@ import br.com.geoged.entity.VooCordenada;
 
 public interface VooCordenadaService extends IServiceBase<VooCordenada>
 {
-	public List<VooCordenada> saveAll(List<VooCordenada> cordenadas);
+	public List<VooCordenada> saveAll(List<VooCordenada> cordenadas);	
 
 	public List<VooCordenada> findByTenantId(Integer tenantId);
 
@@ -18,4 +18,6 @@ public interface VooCordenadaService extends IServiceBase<VooCordenada>
 	public VooCordenadaDTO saveDTO(VooCordenadaDTO dto);
 	
 	public List<VooCordenadaAcaoMapaDTO>findVooCordenadaAcaoDTOByIdVoo(Integer idVoo);
+	
+	public Integer countByTenantId(Integer tenantId);
 }

@@ -91,4 +91,11 @@ public class VooCordenadaAcaoServiceImpl extends ServiceBaseImpl<VooCordenadaAca
 	{
 		return vooCordenadaAcaoRepository.findByIdVooCordenadaAcao(id);
 	}
+	
+
+	@Override
+	public Integer countByTenantId(Integer tenantId)
+	{
+		return vooCordenadaAcaoRepository.countByTenantId(tenantId);
+	}
 }

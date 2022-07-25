@@ -15,4 +15,8 @@ public interface VooCordenadaAcaoRepository extends JpaRepository<VooCordenadaAc
 	@Query("select e from VooCordenadaAcao e where e.id = :id")
 	public VooCordenadaAcao findByIdVooCordenadaAcao(@Param("id") Integer id);
 	
+
+	@Query("select count(e) from VooCordenadaAcao e where e.tenant_id = :tenant_id")
+	public Integer countByTenantId(@Param("tenant_id") Integer tenant_id);
+	
 }

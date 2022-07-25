@@ -16,4 +16,6 @@ public interface VooCordenadaAcaoService extends IServiceBase<VooCordenadaAcao>
 	
 	public VooCordenadaAcao findByIdVooCordenadaAcao(Integer id);
 	
+	public Integer countByTenantId(Integer tenantId);
+	
 }

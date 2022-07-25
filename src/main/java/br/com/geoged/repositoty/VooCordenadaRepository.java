@@ -20,4 +20,6 @@ public interface VooCordenadaRepository extends JpaRepository<VooCordenada, Inte
 	@Query(value = "select c.idVoo, c.id as idCordenada, a.id as idAcao, c.latitude, c.longitude from geoged.VooCordenada c left join geoged.VooCordenadaAcao a on(c.id = a.idVooCordenada) where c.idVoo = :idVoo", nativeQuery = true)
 	public List<VooCordenadaAcaoMapaDTO> findVooCordenadaAcaoDTOByIdVoo(@Param("idVoo") Integer idVoo);
 
+	@Query("select count(e) from VooCordenada e where e.tenant_id = :tenant_id")
+	public Integer countByTenantId(@Param("tenant_id") Integer tenant_id);
 }
