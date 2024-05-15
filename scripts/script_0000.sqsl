@@ -1,0 +1,684 @@
+-- Database generated with pgModeler (PostgreSQL Database Modeler).
+-- pgModeler  version: 0.8.0
+-- PostgreSQL version: 9.4
+-- Project Site: pgmodeler.com.br
+-- Model Author: ---
+
+
+-- Database creation must be done outside an multicommand file.
+-- These commands were put in this file only for convenience.
+-- -- object: geoged | type: DATABASE --
+-- -- DROP DATABASE IF EXISTS geoged;
+-- CREATE DATABASE geoged
+-- ;
+-- -- ddl-end --
+-- 
+
+-- object: geoged | type: SCHEMA --
+-- DROP SCHEMA IF EXISTS geoged CASCADE;
+CREATE SCHEMA geoged;
+-- ddl-end --
+ALTER SCHEMA geoged OWNER TO postgres;
+-- ddl-end --
+
+SET search_path TO pg_catalog,public,geoged;
+-- ddl-end --
+
+-- object: geoged.seq_tenant_id | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_tenant_id CASCADE;
+CREATE SEQUENCE geoged.seq_tenant_id
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_tenant_id OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.tenant_id | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.tenant_id CASCADE;
+CREATE TABLE geoged.tenant_id(
+	id bigint NOT NULL,
+	razaosocial varchar(255) NOT NULL,
+	cpfcnpj varchar(255) NOT NULL,
+	nomefantasia varchar(255) NOT NULL,
+	dataregistro timestamp NOT NULL,
+	ativo smallint NOT NULL DEFAULT 1,
+	CONSTRAINT pk_tenant_id PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.tenant_id IS 'tenant_id';
+-- ddl-end --
+ALTER TABLE geoged.tenant_id OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_usuario | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_usuario CASCADE;
+CREATE SEQUENCE geoged.seq_usuario
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_usuario OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.usuario | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.usuario CASCADE;
+CREATE TABLE geoged.usuario(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	nome varchar(255) NOT NULL,
+	senha varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+	dataregistro timestamp,
+	CONSTRAINT pk_usuario PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.usuario IS 'usuario';
+-- ddl-end --
+COMMENT ON CONSTRAINT pk_usuario ON geoged.usuario  IS 'pk_usuario';
+-- ddl-end --
+ALTER TABLE geoged.usuario OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_equipamento | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_equipamento CASCADE;
+CREATE SEQUENCE geoged.seq_equipamento
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_equipamento OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.equipamento | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.equipamento CASCADE;
+CREATE TABLE geoged.equipamento(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	nome varchar(255) NOT NULL,
+	descricao varchar(255),
+	serie varchar(255),
+	tipo smallint NOT NULL,
+	CONSTRAINT pk_equipamento PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.equipamento IS 'equipamento';
+-- ddl-end --
+ALTER TABLE geoged.equipamento OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_voo | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_voo CASCADE;
+CREATE SEQUENCE geoged.seq_voo
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_voo OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_voocordenada | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_voocordenada CASCADE;
+CREATE SEQUENCE geoged.seq_voocordenada
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_voocordenada OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.voo | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.voo CASCADE;
+CREATE TABLE geoged.voo(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	idusuario bigint NOT NULL,
+	idequipe bigint,
+	idequipamento bigint,
+	nome varchar(255) NOT NULL,
+	descricao varchar(255),
+	dataregistro timestamp NOT NULL,
+	CONSTRAINT pk_voo PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.voo IS 'voo';
+-- ddl-end --
+ALTER TABLE geoged.voo OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.voocordenada | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.voocordenada CASCADE;
+CREATE TABLE geoged.voocordenada(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	idvoo bigint NOT NULL,
+	latitude double precision,
+	longitude double precision,
+	altitude double precision,
+	dataregistro timestamp NOT NULL,
+	CONSTRAINT pk_voocoordenada PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.voocordenada IS 'voocordenada';
+-- ddl-end --
+ALTER TABLE geoged.voocordenada OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_equipe | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_equipe CASCADE;
+CREATE SEQUENCE geoged.seq_equipe
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_equipe OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.equipe | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.equipe CASCADE;
+CREATE TABLE geoged.equipe(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	nome varchar(255) NOT NULL,
+	dataregistro timestamp NOT NULL,
+	CONSTRAINT pk_equipe PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.equipe IS 'equipe';
+-- ddl-end --
+ALTER TABLE geoged.equipe OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_colaborador | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_colaborador CASCADE;
+CREATE SEQUENCE geoged.seq_colaborador
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_colaborador OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.colaborador | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.colaborador CASCADE;
+CREATE TABLE geoged.colaborador(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	nome varchar(255) NOT NULL,
+	cpfcnpj varchar(255),
+	CONSTRAINT pk_colaborador PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.colaborador IS 'colaborador';
+-- ddl-end --
+ALTER TABLE geoged.colaborador OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_equipamentogrupo | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_equipamentogrupo CASCADE;
+CREATE SEQUENCE geoged.seq_equipamentogrupo
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_equipamentogrupo OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.equipamentogrupo | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.equipamentogrupo CASCADE;
+CREATE TABLE geoged.equipamentogrupo(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	nome varchar(255) NOT NULL,
+	dataregistro timestamp NOT NULL,
+	CONSTRAINT pk_equipamentogrupo PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.equipamentogrupo IS 'equipamentogrupo';
+-- ddl-end --
+ALTER TABLE geoged.equipamentogrupo OWNER TO postgres;
+-- ddl-end --
+
+-- object: ix_tenant_id_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_tenant_id_01 CASCADE;
+CREATE UNIQUE INDEX ix_tenant_id_01 ON geoged.tenant_id
+	USING btree
+	(
+	  razaosocial ASC NULLS LAST,
+	  cpfcnpj ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_usuario_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_usuario_01 CASCADE;
+CREATE UNIQUE INDEX ix_usuario_01 ON geoged.usuario
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  email ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_colaborador_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_colaborador_01 CASCADE;
+CREATE UNIQUE INDEX ix_colaborador_01 ON geoged.colaborador
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  nome ASC NULLS LAST,
+	  cpfcnpj ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_equipamento_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_equipamento_01 CASCADE;
+CREATE UNIQUE INDEX ix_equipamento_01 ON geoged.equipamento
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  serie ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_equipe_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_equipe_01 CASCADE;
+CREATE UNIQUE INDEX ix_equipe_01 ON geoged.equipe
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  nome ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_equipamentogrupo_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_equipamentogrupo_01 CASCADE;
+CREATE UNIQUE INDEX ix_equipamentogrupo_01 ON geoged.equipamentogrupo
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  nome ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_voo_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_voo_01 CASCADE;
+CREATE UNIQUE INDEX ix_voo_01 ON geoged.voo
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  nome ASC NULLS LAST,
+	  dataregistro ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: geoged.seq_voocordenadaacao | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_voocordenadaacao CASCADE;
+CREATE SEQUENCE geoged.seq_voocordenadaacao
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_voocordenadaacao OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_voocordenadaacaobin | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_voocordenadaacaobin CASCADE;
+CREATE SEQUENCE geoged.seq_voocordenadaacaobin
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_voocordenadaacaobin OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_acaotipo | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_acaotipo CASCADE;
+CREATE SEQUENCE geoged.seq_acaotipo
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_acaotipo OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.voocordenadaacao | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.voocordenadaacao CASCADE;
+CREATE TABLE geoged.voocordenadaacao(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	idacaotipo bigint NOT NULL,
+	idvoocordenada bigint NOT NULL,
+	extensao varchar(255),
+	mimetype varchar(255),
+	valorclob bytea,
+	valorblob text,
+	dataregistro timestamp NOT NULL,
+	CONSTRAINT pk_voocoordenadaacao PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.voocordenadaacao IS 'voocoordenadaacao';
+-- ddl-end --
+ALTER TABLE geoged.voocordenadaacao OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.acaotipo | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.acaotipo CASCADE;
+CREATE TABLE geoged.acaotipo(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	nome varchar(255) NOT NULL,
+	tipo smallint NOT NULL,
+	CONSTRAINT pk_acao_tipo PRIMARY KEY (id)
+
+);
+-- ddl-end --
+COMMENT ON TABLE geoged.acaotipo IS 'acaotipo';
+-- ddl-end --
+ALTER TABLE geoged.acaotipo OWNER TO postgres;
+-- ddl-end --
+
+-- object: ix_acaotipo_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_acaotipo_01 CASCADE;
+CREATE UNIQUE INDEX ix_acaotipo_01 ON geoged.acaotipo
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  nome ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_acaotipo_02 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_acaotipo_02 CASCADE;
+CREATE UNIQUE INDEX ix_acaotipo_02 ON geoged.acaotipo
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  tipo ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: geoged.seq_equipecolaborador | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_equipecolaborador CASCADE;
+CREATE SEQUENCE geoged.seq_equipecolaborador
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_equipecolaborador OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.equipecolaborador | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.equipecolaborador CASCADE;
+CREATE TABLE geoged.equipecolaborador(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	idequipe bigint NOT NULL,
+	idcolaborador bigint NOT NULL,
+	CONSTRAINT pk_equipecolaborador PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE geoged.equipecolaborador OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.seq_equipamentogrupoequipamento | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS geoged.seq_equipamentogrupoequipamento CASCADE;
+CREATE SEQUENCE geoged.seq_equipamentogrupoequipamento
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE geoged.seq_equipamentogrupoequipamento OWNER TO postgres;
+-- ddl-end --
+
+-- object: geoged.equipamentogrupoequipamento | type: TABLE --
+-- DROP TABLE IF EXISTS geoged.equipamentogrupoequipamento CASCADE;
+CREATE TABLE geoged.equipamentogrupoequipamento(
+	id bigint NOT NULL,
+	tenant_id bigint NOT NULL,
+	idequipamentogrupo bigint NOT NULL,
+	idequipamento bigint NOT NULL,
+	CONSTRAINT pk_equipamentogrupoequipamento PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE geoged.equipamentogrupoequipamento OWNER TO postgres;
+-- ddl-end --
+
+-- object: ix_equipecolaborador_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_equipecolaborador_01 CASCADE;
+CREATE UNIQUE INDEX ix_equipecolaborador_01 ON geoged.equipecolaborador
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  idequipe ASC NULLS LAST,
+	  idcolaborador ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_voocordenada_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_voocordenada_01 CASCADE;
+CREATE UNIQUE INDEX ix_voocordenada_01 ON geoged.voocordenada
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  idvoo ASC NULLS LAST,
+	  dataregistro ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: ix_voocoordenadaacao_01 | type: INDEX --
+-- DROP INDEX IF EXISTS geoged.ix_voocoordenadaacao_01 CASCADE;
+CREATE UNIQUE INDEX ix_voocoordenadaacao_01 ON geoged.voocordenadaacao
+	USING btree
+	(
+	  tenant_id ASC NULLS LAST,
+	  idvoocordenada ASC NULLS LAST,
+	  idacaotipo ASC NULLS LAST,
+	  dataregistro ASC NULLS LAST
+	);
+-- ddl-end --
+
+-- object: fk_usuario_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.usuario DROP CONSTRAINT IF EXISTS fk_usuario_tenant_id CASCADE;
+ALTER TABLE geoged.usuario ADD CONSTRAINT fk_usuario_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipamento_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipamento DROP CONSTRAINT IF EXISTS fk_equipamento_tenant_id CASCADE;
+ALTER TABLE geoged.equipamento ADD CONSTRAINT fk_equipamento_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voo_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.voo DROP CONSTRAINT IF EXISTS fk_voo_tenant_id CASCADE;
+ALTER TABLE geoged.voo ADD CONSTRAINT fk_voo_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voo_usuario | type: CONSTRAINT --
+-- ALTER TABLE geoged.voo DROP CONSTRAINT IF EXISTS fk_voo_usuario CASCADE;
+ALTER TABLE geoged.voo ADD CONSTRAINT fk_voo_usuario FOREIGN KEY (idusuario)
+REFERENCES geoged.usuario (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voo_equipe | type: CONSTRAINT --
+-- ALTER TABLE geoged.voo DROP CONSTRAINT IF EXISTS fk_voo_equipe CASCADE;
+ALTER TABLE geoged.voo ADD CONSTRAINT fk_voo_equipe FOREIGN KEY (idequipe)
+REFERENCES geoged.equipe (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voo_equipamento | type: CONSTRAINT --
+-- ALTER TABLE geoged.voo DROP CONSTRAINT IF EXISTS fk_voo_equipamento CASCADE;
+ALTER TABLE geoged.voo ADD CONSTRAINT fk_voo_equipamento FOREIGN KEY (idequipamento)
+REFERENCES geoged.equipamento (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voocoordenada_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.voocordenada DROP CONSTRAINT IF EXISTS fk_voocoordenada_tenant_id CASCADE;
+ALTER TABLE geoged.voocordenada ADD CONSTRAINT fk_voocoordenada_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voocoordenada_voo | type: CONSTRAINT --
+-- ALTER TABLE geoged.voocordenada DROP CONSTRAINT IF EXISTS fk_voocoordenada_voo CASCADE;
+ALTER TABLE geoged.voocordenada ADD CONSTRAINT fk_voocoordenada_voo FOREIGN KEY (idvoo)
+REFERENCES geoged.voo (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipe_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipe DROP CONSTRAINT IF EXISTS fk_equipe_tenant_id CASCADE;
+ALTER TABLE geoged.equipe ADD CONSTRAINT fk_equipe_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_colaborador_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.colaborador DROP CONSTRAINT IF EXISTS fk_colaborador_tenant_id CASCADE;
+ALTER TABLE geoged.colaborador ADD CONSTRAINT fk_colaborador_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipamentogrupo_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipamentogrupo DROP CONSTRAINT IF EXISTS fk_equipamentogrupo_tenant_id CASCADE;
+ALTER TABLE geoged.equipamentogrupo ADD CONSTRAINT fk_equipamentogrupo_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voocoordenadaacao_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.voocordenadaacao DROP CONSTRAINT IF EXISTS fk_voocoordenadaacao_tenant_id CASCADE;
+ALTER TABLE geoged.voocordenadaacao ADD CONSTRAINT fk_voocoordenadaacao_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voocoordenadaacao_acaotipo | type: CONSTRAINT --
+-- ALTER TABLE geoged.voocordenadaacao DROP CONSTRAINT IF EXISTS fk_voocoordenadaacao_acaotipo CASCADE;
+ALTER TABLE geoged.voocordenadaacao ADD CONSTRAINT fk_voocoordenadaacao_acaotipo FOREIGN KEY (idacaotipo)
+REFERENCES geoged.acaotipo (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_voocordenada_voocordenada | type: CONSTRAINT --
+-- ALTER TABLE geoged.voocordenadaacao DROP CONSTRAINT IF EXISTS fk_voocordenada_voocordenada CASCADE;
+ALTER TABLE geoged.voocordenadaacao ADD CONSTRAINT fk_voocordenada_voocordenada FOREIGN KEY (idvoocordenada)
+REFERENCES geoged.voocordenada (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_acaotipo_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.acaotipo DROP CONSTRAINT IF EXISTS fk_acaotipo_tenant_id CASCADE;
+ALTER TABLE geoged.acaotipo ADD CONSTRAINT fk_acaotipo_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipecolaborador_tenant_id | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipecolaborador DROP CONSTRAINT IF EXISTS fk_equipecolaborador_tenant_id CASCADE;
+ALTER TABLE geoged.equipecolaborador ADD CONSTRAINT fk_equipecolaborador_tenant_id FOREIGN KEY (tenant_id)
+REFERENCES geoged.tenant_id (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipecolaborador_equipe | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipecolaborador DROP CONSTRAINT IF EXISTS fk_equipecolaborador_equipe CASCADE;
+ALTER TABLE geoged.equipecolaborador ADD CONSTRAINT fk_equipecolaborador_equipe FOREIGN KEY (idequipe)
+REFERENCES geoged.equipe (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipecolaborador_colaborador | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipecolaborador DROP CONSTRAINT IF EXISTS fk_equipecolaborador_colaborador CASCADE;
+ALTER TABLE geoged.equipecolaborador ADD CONSTRAINT fk_equipecolaborador_colaborador FOREIGN KEY (idcolaborador)
+REFERENCES geoged.colaborador (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipamentogrupoeuipamento_equipamento | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipamentogrupoequipamento DROP CONSTRAINT IF EXISTS fk_equipamentogrupoeuipamento_equipamento CASCADE;
+ALTER TABLE geoged.equipamentogrupoequipamento ADD CONSTRAINT fk_equipamentogrupoeuipamento_equipamento FOREIGN KEY (idequipamento)
+REFERENCES geoged.equipamento (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_equipamentogrupoeuipamento_equipamentogrupo | type: CONSTRAINT --
+-- ALTER TABLE geoged.equipamentogrupoequipamento DROP CONSTRAINT IF EXISTS fk_equipamentogrupoeuipamento_equipamentogrupo CASCADE;
+ALTER TABLE geoged.equipamentogrupoequipamento ADD CONSTRAINT fk_equipamentogrupoeuipamento_equipamentogrupo FOREIGN KEY (idequipamentogrupo)
+REFERENCES geoged.equipamentogrupo (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+
+

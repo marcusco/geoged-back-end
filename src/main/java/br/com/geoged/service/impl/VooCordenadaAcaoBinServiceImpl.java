@@ -2,6 +2,8 @@ package br.com.geoged.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.geoged.entity.VooCordenadaAcaoBin;
@@ -10,10 +12,11 @@ import br.com.geoged.service.VooCordenadaAcaoBinService;
 
 
 @Service
+@RequiredArgsConstructor
 public class VooCordenadaAcaoBinServiceImpl extends ServiceBaseImpl<VooCordenadaAcaoBin> implements VooCordenadaAcaoBinService
 {
-	@Autowired
-	private VooCordenadaAcaoBinRepository vooCordenadaAcaoBinRepository;
+
+	private final VooCordenadaAcaoBinRepository vooCordenadaAcaoBinRepository;
 	@Override
 	public VooCordenadaAcaoBin save(VooCordenadaAcaoBin entity)
 	{

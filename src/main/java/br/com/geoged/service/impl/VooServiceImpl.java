@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import br.com.geoged.dto.VooCordenadaAcaoDTO;
 import br.com.geoged.dto.VooCordenadaDTO;
@@ -23,28 +24,21 @@ import br.com.geoged.service.VooCordenadaService;
 import br.com.geoged.service.VooService;
 import br.com.geoged.util.CollectionsUtil;
 
-
 @Service
-public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
-{
-	@Autowired
-	private VooRepository				vooRepository;
-	@Autowired
-	private VooCordenadaService		vooCordenadaService;
-	@Autowired
-	private VooCordenadaAcaoService	vooCordenadaAcaoService;
-	//
-	public VooServiceImpl()
-	{
-		super();
-	}
+@RequiredArgsConstructor
+public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService {
 
+	private final VooRepository vooRepository;
+
+	private final VooCordenadaService vooCordenadaService;
+
+	private final VooCordenadaAcaoService vooCordenadaAcaoService;
+
+	//
 	@Override
-	public Voo save(Voo entity) throws GeoGedException
-	{
+	public Voo save(Voo entity) throws GeoGedException {
 		Voo tmp = null;
-		if(entity != null)
-		{
+		if (entity != null) {
 			vooCordenadaService.saveAll(entity.getCordenadas());
 			tmp = vooRepository.save(entity);
 		}
@@ -52,93 +46,76 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	}
 
 	@Override
-	public Optional<Voo> findById(Integer id)
-	{
+	public Optional<Voo> findById(Integer id) {
 		return Optional.of(vooRepository.findById(id).orElseThrow(() -> new GeoGedException("sem.dados")));
 	}
 
 	@Override
-	public void delete(Voo entity)
-	{
+	public void delete(Voo entity) {
 		vooRepository.delete(entity);
 	}
 
 	@Override
-	public List<Voo> findByTenantId(Integer tenantId)
-	{
+	public List<Voo> findByTenantId(Integer tenantId) {
 		return vooRepository.findByTenant_id(tenantId).orElseThrow(() -> new GeoGedException("sem.dados"));
 	}
 
 	@Override
-	public Voo findByNome(Integer tenantId, String nome)
-	{
+	public Voo findByNome(Integer tenantId, String nome) {
 		return vooRepository.findByNome(tenantId, nome);
 	}
 
 	@Override
-	public Voo findByDescricao(Integer tenantId, String descricao)
-	{
+	public Voo findByDescricao(Integer tenantId, String descricao) {
 		return vooRepository.findByDescricao(tenantId, descricao);
 	}
 
-	public Voo findByTenantIAndDescricaoAndNomeAndDataRegistro(Integer tenantId, String descricao, String nome, Calendar dataRegistro)
-	{
+	public Voo findByTenantIAndDescricaoAndNomeAndDataRegistro(Integer tenantId, String descricao, String nome,
+			Calendar dataRegistro) {
 		return vooRepository.findByTenantIAndDescricaoAndNomeAndDataRegistro(tenantId, descricao, nome, dataRegistro);
 	}
 
-	public List<VooDTO> saveDTO(List<VooDTO> dtos)
-	{
+	public List<VooDTO> saveDTO(List<VooDTO> dtos) {
 		//
 		List<VooDTO> result = new ArrayList<>();
 		//
-		if(!CollectionsUtil.isEmpty(dtos))
-		{
-			for(VooDTO dto : dtos)
-			{
-				try
-				{
+		if (!CollectionsUtil.isEmpty(dtos)) {
+			for (VooDTO dto : dtos) {
+				try {
 					//
-					var voo = convertDtoToClassVoo(dto);
+					Voo voo = convertDtoToClassVoo(dto);
 					//
-					if(voo.getId() == null)
-					{
-						var tmp = vooRepository.save(voo);
+					if (voo.getId() == null) {
+						Voo tmp = vooRepository.save(voo);
 						voo.setId(tmp.getId());
 						dto.setIdExterno(tmp.getId());
 					}
-					if(!CollectionsUtil.isEmpty(dto.getCordenadas()))
-					{
+					if (!CollectionsUtil.isEmpty(dto.getCordenadas())) {
 						dto.setCordenadas(saveCordenada(dto, voo));
 					}
 					//
 					result.add(dto);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 				}
 			}
 		}
 		return result;
 	}
 
-	private List<VooCordenadaDTO> saveCordenada(VooDTO vooDTO, Voo voo)
-	{
+	private List<VooCordenadaDTO> saveCordenada(VooDTO vooDTO, Voo voo) {
 		List<VooCordenadaDTO> result = new ArrayList<>();
 		//
-		for(VooCordenadaDTO dto : vooDTO.getCordenadas())
-		{
-			var cordenada = convertDtoToClassVooCordenada(dto);
+		for (VooCordenadaDTO dto : vooDTO.getCordenadas()) {
+			VooCordenada cordenada = convertDtoToClassVooCordenada(dto);
 			//
-			if(cordenada.getId() == null)
-			{
+			if (cordenada.getId() == null) {
 				cordenada.setVoo(new Voo(voo.getId()));
-				var tmp = vooCordenadaService.save(cordenada);
+				VooCordenada tmp = vooCordenadaService.save(cordenada);
 				cordenada.setId(tmp.getId());
 				dto.setIdExterno(tmp.getId());
 			}
 			//
-			if(!CollectionsUtil.isEmpty(dto.getAcoes()))
-			{
+			if (!CollectionsUtil.isEmpty(dto.getAcoes())) {
 				dto.setAcoes(saveCordenadaAcao(dto, cordenada));
 			}
 			result.add(dto);
@@ -146,18 +123,15 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		return result;
 	}
 
-	private List<VooCordenadaAcaoDTO> saveCordenadaAcao(VooCordenadaDTO vooCordenada, VooCordenada cordenada)
-	{
+	private List<VooCordenadaAcaoDTO> saveCordenadaAcao(VooCordenadaDTO vooCordenada, VooCordenada cordenada) {
 		List<VooCordenadaAcaoDTO> result = new ArrayList<>();
 		//
-		for(VooCordenadaAcaoDTO dto : vooCordenada.getAcoes())
-		{
-			var acao = convertDtoToClassVooCordenadaAcao(dto);
+		for (VooCordenadaAcaoDTO dto : vooCordenada.getAcoes()) {
+			VooCordenadaAcao acao = convertDtoToClassVooCordenadaAcao(dto);
 			//
-			if(acao.getIdExterno() == null)
-			{
+			if (acao.getIdExterno() == null) {
 				acao.setVooCordenada(new VooCordenada(cordenada.getId()));
-				var tmp = vooCordenadaAcaoService.save(acao);
+				VooCordenadaAcao tmp = vooCordenadaAcaoService.save(acao);
 				dto.setIdExterno(tmp.getId());
 			}
 			result.add(dto);
@@ -165,9 +139,8 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		return result;
 	}
 
-	private Voo convertDtoToClassVoo(VooDTO dto)
-	{
-		var voo = new Voo();
+	private Voo convertDtoToClassVoo(VooDTO dto) {
+		Voo voo = new Voo();
 		voo.setTenant_id(dto.getTenant_id());
 		voo.setId(dto.getIdExterno() == 0 ? null : dto.getIdExterno());
 		voo.setIdExterno(dto.getId());
@@ -180,9 +153,8 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		return voo;
 	}
 
-	private VooCordenada convertDtoToClassVooCordenada(VooCordenadaDTO dto)
-	{
-		var cordenada = new VooCordenada();
+	private VooCordenada convertDtoToClassVooCordenada(VooCordenadaDTO dto) {
+		VooCordenada cordenada = new VooCordenada();
 		cordenada.setTenant_id(dto.getTenant_id());
 		cordenada.setId(dto.getIdExterno() == 0 ? null : dto.getIdExterno());
 		cordenada.setIdExterno(dto.getId());
@@ -193,9 +165,8 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 		return cordenada;
 	}
 
-	private VooCordenadaAcao convertDtoToClassVooCordenadaAcao(VooCordenadaAcaoDTO dto)
-	{
-		var acao = new VooCordenadaAcao();
+	private VooCordenadaAcao convertDtoToClassVooCordenadaAcao(VooCordenadaAcaoDTO dto) {
+		VooCordenadaAcao acao = new VooCordenadaAcao();
 		acao.setTenant_id(dto.getTenant_id());
 		acao.setId(dto.getIdExterno() == 0 ? null : dto.getIdExterno());
 		acao.setIdExterno(dto.getId());
@@ -207,11 +178,10 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	}
 
 	@Override
-	public VooDTO saveDTO(VooDTO dto)
-	{
-		var tmp = vooRepository.findByTenantIAndNomeAndDataRegistro(dto.getTenant_id(), dto.getNome(), dto.getDataRegistro());
-		if(tmp == null)
-		{
+	public VooDTO saveDTO(VooDTO dto) {
+		Voo tmp = vooRepository.findByTenantIAndNomeAndDataRegistro(dto.getTenant_id(), dto.getNome(),
+				dto.getDataRegistro());
+		if (tmp == null) {
 			tmp = convertDtoToClassVoo(dto);
 			tmp = vooRepository.save(tmp);
 		}
@@ -220,8 +190,7 @@ public class VooServiceImpl extends ServiceBaseImpl<Voo> implements VooService
 	}
 
 	@Override
-	public Integer countByTenantI(Integer tenant_id)
-	{
+	public Integer countByTenantI(Integer tenant_id) {
 		return vooRepository.countByTenantI(tenant_id);
 	}
 }

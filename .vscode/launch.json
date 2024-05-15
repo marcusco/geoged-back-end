@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-GeogedApplication<geoged>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "br.com.geoged.GeogedApplication",
+      "projectName": "geoged",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

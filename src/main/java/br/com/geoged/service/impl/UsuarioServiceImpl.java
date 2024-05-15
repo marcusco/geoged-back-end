@@ -3,8 +3,9 @@ package br.com.geoged.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.geoged.entity.Usuario;
@@ -15,13 +16,14 @@ import br.com.geoged.service.UsuarioService;
 
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioServiceImpl extends ServiceBaseImpl<Usuario> implements UsuarioService
 {
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+
+	private final UsuarioRepository usuarioRepository;
 	//
 	@Override
-	@Transactional(value = TxType.REQUIRED)
+	@Transactional(value = Transactional.TxType.REQUIRED)
 	public Usuario save(Usuario entity) throws GeoGedException
 	{
 		super.save(entity);

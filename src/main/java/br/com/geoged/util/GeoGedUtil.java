@@ -3,14 +3,16 @@ package br.com.geoged.util;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import javax.inject.Singleton;
 import br.com.geoged.constants.GeoGedConstants;
 import br.com.geoged.enums.ErrorCodeEnum;
 import br.com.geoged.enums.ExceptionCodeEnum;
 
-@Singleton
+
+
+
 public class GeoGedUtil {
 
   //
@@ -60,7 +62,7 @@ public class GeoGedUtil {
   }
 
   private static ResourceBundle produceResourceBundle(String baseName) {
-    var locale = LocaleThreadLocal.get();
+    Locale locale = LocaleThreadLocal.get();
     return ResourceBundle.getBundle(baseName, locale);
   }
 
@@ -72,14 +74,13 @@ public class GeoGedUtil {
   }
 
   public static String getFormattedDate(Calendar value, String format) {
-    var formatter = new SimpleDateFormat(format);
+    SimpleDateFormat formatter = new SimpleDateFormat(format);
     return formatter.format(value.getTime());
   }
 
   public static String getBDStyleFormattedDate(Calendar value) {
-    var formatter = new SimpleDateFormat(DEFAULT_BD_DATE_FORMAT);
+    SimpleDateFormat formatter = new SimpleDateFormat(DEFAULT_BD_DATE_FORMAT);
     return formatter.format(value.getTime());
   }
-
 
 }

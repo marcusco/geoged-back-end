@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import br.com.geoged.exceptions.GeoGedException;
 
 
-@Aspect
+
 @Component
 public class BeforeSaveAspect
 {

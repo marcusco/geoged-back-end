@@ -10,39 +10,33 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-
-public class CustomDateDeserializer extends StdDeserializer<Calendar>
-{
+public class CustomDateDeserializer extends StdDeserializer<Calendar> {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 	//
-	private SimpleDateFormat	formatter			= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	//
-	public CustomDateDeserializer()
-	{
+	public CustomDateDeserializer() {
 		this(null);
 	}
 
-	public CustomDateDeserializer(Class<?> vc)
-	{
+	public CustomDateDeserializer(Class<?> vc) {
 		super(vc);
 	}
 
 	@Override
-	public Calendar deserialize(JsonParser jsonparser, DeserializationContext context) throws IOException, JsonProcessingException
-	{
+	public Calendar deserialize(JsonParser jsonparser, DeserializationContext context)
+			throws IOException, JsonProcessingException {
 		String date = jsonparser.getText();
-		try
-		{
+		try {
 			Date tmp = formatter.parse(date);
-			var dateParse = Calendar.getInstance();
+			Calendar dateParse = Calendar.getInstance();
 			dateParse.setTime(tmp);
 			return dateParse;
-		}
-		catch (ParseException e)
-		{
+		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
 	}

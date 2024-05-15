@@ -1,6 +1,7 @@
 package br.com.geoged.test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 import br.com.geoged.GeogedAplicationTests;
 

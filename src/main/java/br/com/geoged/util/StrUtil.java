@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.RandomStringUtils;
 import br.com.geoged.common.Cast;
 
 
@@ -416,12 +415,6 @@ public final class StrUtil {
     return length(string);
   }
 
-  /**
-   * Retorna apenas os números da string passada no parâmetro. equivale a expressão regular [0-9]
-   * 
-   * @param key
-   * @return String com números
-   */
   public static boolean isOnlyNumbers(String text) {
     if (text == null)
       return false;
@@ -476,7 +469,7 @@ public final class StrUtil {
     StringBuilder builder = new StringBuilder();
     //
     if (!StrUtil.isEmpty(value)) {
-      String[] tmp = value.split("\\" + escape);
+      String[] tmp = value.split(String.valueOf('\\' + escape));
       //
       for (int i = 0; i < tmp.length; i++) {
         Cast cast = new Cast(tmp[i]);
@@ -738,22 +731,6 @@ public final class StrUtil {
     return doubleQuotes(string, false);
   }
 
-  public static String generateRandomString(Integer count, Boolean letters, Boolean numbers) {
-    //
-    return RandomStringUtils.random(count, letters, numbers);
-  }
 
-  public static String generateRandomString(Integer countGroup, Integer countSubGroup,
-      String separator, Boolean letters, Boolean numbers) {
-    //
-    StringBuilder randomTmp = new StringBuilder();
-    //
-    for (int i = 0; i < countGroup; i++) {
-      //
-      randomTmp.append(generateRandomString(countSubGroup, letters, numbers).concat(separator));
-    }
-    //
-    return randomTmp.substring(0, (randomTmp.length() - 1));
-  }
 
 }

@@ -1,8 +1,7 @@
 package br.com.geoged.dto;
 
-import java.io.Serializable;
-import java.util.Objects;
-import org.springframework.data.annotation.Transient;
+
+
 
 
 public interface VooCordenadaAcaoMapaDTO 

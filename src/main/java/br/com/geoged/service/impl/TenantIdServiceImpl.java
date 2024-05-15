@@ -2,6 +2,8 @@ package br.com.geoged.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.geoged.entity.TenantId;
@@ -12,10 +14,11 @@ import br.com.geoged.service.TenantIdService;
 
 
 @Service
+@RequiredArgsConstructor
 public class TenantIdServiceImpl extends ServiceBaseImpl<TenantId> implements TenantIdService
 {
-	@Autowired
-	private TenantIdRepository tenantIdRepository;
+
+	private final TenantIdRepository tenantIdRepository;
 	@Override
 	public TenantId save(TenantId entity) throws GeoGedException
 	{

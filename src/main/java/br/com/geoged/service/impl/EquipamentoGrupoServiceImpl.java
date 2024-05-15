@@ -2,6 +2,8 @@ package br.com.geoged.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.geoged.entity.EquipamentoGrupo;
@@ -10,10 +12,11 @@ import br.com.geoged.service.EquipamentoGrupoService;
 
 
 @Service
+@RequiredArgsConstructor
 public class EquipamentoGrupoServiceImpl extends ServiceBaseImpl<EquipamentoGrupo> implements EquipamentoGrupoService
 {
-	@Autowired
-	private EquipamentoGrupoRepository equipamentoGrupoRepository;
+
+	private final EquipamentoGrupoRepository equipamentoGrupoRepository;
 	@Override
 	public EquipamentoGrupo save(EquipamentoGrupo entity)
 	{
